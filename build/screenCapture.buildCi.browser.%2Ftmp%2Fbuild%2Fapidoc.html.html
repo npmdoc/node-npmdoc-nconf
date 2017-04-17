@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/flatiron/nconf#readme"
-
-    >nconf (v0.8.4)</a>
+    <a href="https://github.com/flatiron/nconf#readme">nconf (v0.8.4)</a>
 </h1>
 <h4>Hierarchical node.js configuration with files, environment variables, command-line arguments, and atomic object merging.</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.nconf">module nconf</a><ol>
 
@@ -1566,7 +1559,7 @@
     <li>description and source-code<pre class="apidocCodePre">Argv = function (options, usage) {
   Memory.call(this, options);
 
-  this.type     = &#x27;argv&#x27;;
+  this.type     = 'argv';
   this.readOnly = true;
   this.options  = options || false;
   this.usage    = usage;
@@ -1587,11 +1580,11 @@
   var self = this,
       yargs, argv;
 
-  yargs = typeof this.options === &#x27;object&#x27;
-    ? require(&#x27;yargs&#x27;)(process.argv.slice(2)).options(this.options)
-    : require(&#x27;yargs&#x27;)(process.argv.slice(2));
+  yargs = typeof this.options === 'object'
+    ? require('yargs')(process.argv.slice(2)).options(this.options)
+    : require('yargs')(process.argv.slice(2));
 
-  if (typeof this.usage === &#x27;string&#x27;) { yargs.usage(this.usage) }
+  if (typeof this.usage === 'string') { yargs.usage(this.usage) }
 
   argv = yargs.argv
 
@@ -1601,7 +1594,7 @@
 
   this.readOnly = false;
   Object.keys(argv).forEach(function (key) {
-    if (typeof argv[key] !== &#x27;undefined&#x27;) {
+    if (typeof argv[key] !== 'undefined') {
       self.set(key, argv[key]);
     }
   });
@@ -1644,21 +1637,21 @@
   Memory.call(this, options);
 
   options        = options || {};
-  this.type      = &#x27;env&#x27;;
+  this.type      = 'env';
   this.readOnly  = true;
   this.whitelist = options.whitelist || [];
-  this.separator = options.separator || &#x27;&#x27;;
+  this.separator = options.separator || '';
   this.lowerCase = options.lowerCase || false;
 
-  if (({}).toString.call(options.match) === &#x27;[object RegExp]&#x27;
-      &#x26;&#x26; typeof options !== &#x27;string&#x27;) {
+  if (({}).toString.call(options.match) === '[object RegExp]'
+      &amp;&amp; typeof options !== 'string') {
     this.match = options.match;
   }
 
   if (options instanceof Array) {
     this.whitelist = options;
   }
-  if (typeof(options) === &#x27;string&#x27;) {
+  if (typeof(options) === 'string') {
     this.separator = options;
   }
 }</pre></li>
@@ -1687,7 +1680,7 @@
 
   this.readOnly = false;
   Object.keys(env).filter(function (key) {
-    if (self.match &#x26;&#x26; self.whitelist.length) {
+    if (self.match &amp;&amp; self.whitelist.length) {
       return key.match(self.match) || self.whitelist.indexOf(key) !== -1
     }
     else if (self.match) {
@@ -1738,12 +1731,12 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">File = function (options) {
   if (!options || !options.file) {
-    throw new Error (&#x27;Missing required option `file`&#x27;);
+    throw new Error ('Missing required option `file`');
   }
 
   Memory.call(this, options);
 
-  this.type    = &#x27;file&#x27;;
+  this.type    = 'file';
   this.file    = options.file;
   this.dir     = options.dir    || process.cwd();
   this.format  = options.format || formats.json;
@@ -1753,17 +1746,17 @@
     || 2;
 
   if (this.secure) {
-    this.secure = Buffer.isBuffer(this.secure) || typeof this.secure === &#x27;string&#x27;
+    this.secure = Buffer.isBuffer(this.secure) || typeof this.secure === 'string'
       ? { secret: this.secure.toString() }
       : this.secure;
 
-    this.secure.alg = this.secure.alg || &#x27;aes-256-ctr&#x27;;
+    this.secure.alg = this.secure.alg || 'aes-256-ctr';
     if (this.secure.secretPath) {
-      this.secure.secret = fs.readFileSync(this.secure.secretPath, &#x27;utf8&#x27;);
+      this.secure.secret = fs.readFileSync(this.secure.secretPath, 'utf8');
     }
 
     if (!this.secure.secret) {
-      throw new Error(&#x27;secure.secret option is required&#x27;);
+      throw new Error('secure.secret option is required');
     }
 
     this.keys = new Secure({
@@ -1808,14 +1801,14 @@
       try {
         // Deals with string that include BOM
         var stringData = data.toString();
-        if (stringData.charAt(0) === &#x27;\uFEFF&#x27;) {
+        if (stringData.charAt(0) === '\uFEFF') {
           stringData = stringData.substr(1);
         }
 
         self.store = self.parse(stringData);
       }
       catch (ex) {
-        return callback(new Error(&#x22;Error parsing your configuration file: [&#x22; + self.file + &#x27;]: &#x27; + ex.message));
+        return callback(new Error("Error parsing your configuration file: [" + self.file + ']: ' + ex.message));
       }
 
       callback(null, self.store);
@@ -1845,15 +1838,15 @@
   //
   try {
     // Deals with file that include BOM
-    var fileData = fs.readFileSync(this.file, &#x27;utf8&#x27;);
-    if (fileData.charAt(0) === &#x27;\uFEFF&#x27;) {
+    var fileData = fs.readFileSync(this.file, 'utf8');
+    if (fileData.charAt(0) === '\uFEFF') {
       fileData = fileData.substr(1);
     }
 
     this.store = this.parse(fileData);
   }
   catch (ex) {
-    throw new Error(&#x22;Error parsing your configuration file: [&#x22; + this.file + &#x27;]: &#x27; + ex.message);
+    throw new Error("Error parsing your configuration file: [" + this.file + ']: ' + ex.message);
   }
 
   return this.store;
@@ -1937,10 +1930,10 @@
 
   base = base || process.cwd();
 
-  if (this.file[0] === &#x27;/&#x27;) {
+  if (this.file[0] === '/') {
     //
     // If filename for this instance is a fully qualified path
-    // (i.e. it starts with a `&#x27;/&#x27;`) then check if it exists
+    // (i.e. it starts with a `'/'`) then check if it exists
     //
     try {
       stats = fs.statSync(fs.realpathSync(this.file));
@@ -1956,7 +1949,7 @@
     }
   }
 
-  if (looking &#x26;&#x26; base) {
+  if (looking &amp;&amp; base) {
     //
     // Attempt to stat the realpath located at `base`
     // if the directory does not exist then return false.
@@ -1984,7 +1977,7 @@
 
       if (previous === base) {
         //
-        // If we&#x27;ve reached the top of the directory structure then simply use
+        // If we've reached the top of the directory structure then simply use
         // the default file path.
         //
         try {
@@ -2051,7 +2044,7 @@
   Memory.call(this, options);
 
   options       = options || {}
-  this.type     = &#x27;literal&#x27;;
+  this.type     = 'literal';
   this.readOnly = true;
   this.store    = options.store || options;
 }</pre></li>
@@ -2084,12 +2077,12 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Memory = function (options) {
   options       = options || {};
-  this.type     = &#x27;memory&#x27;;
+  this.type     = 'memory';
   this.store    = {};
   this.mtimes   = {};
   this.readOnly = false;
   this.loadFrom = options.loadFrom || null;
-  this.logicalSeparator = options.logicalSeparator || &#x27;:&#x27;;
+  this.logicalSeparator = options.logicalSeparator || ':';
 
   if (this.loadFrom) {
     this.store = common.loadFilesSync(this.loadFrom);
@@ -2124,10 +2117,10 @@
   //
   // Scope into the object to get the appropriate nested context
   //
-  for (var i = 0; i &#x3c; path.length - 1; i++) {
+  for (var i = 0; i &lt; path.length - 1; i++) {
     key = path[i];
     value = target[key];
-    if (typeof value !== &#x27;function&#x27; &#x26;&#x26; typeof value !== &#x27;object&#x27;) {
+    if (typeof value !== 'function' &amp;&amp; typeof value !== 'object') {
       return false;
     }
     target = value;
@@ -2157,9 +2150,9 @@
   //
   // Scope into the object to get the appropriate nested context
   //
-  while (path.length &#x3e; 0) {
+  while (path.length &gt; 0) {
     key = path.shift();
-    if (target &#x26;&#x26; target.hasOwnProperty(key)) {
+    if (target &amp;&amp; target.hasOwnProperty(key)) {
       target = target[key];
       continue;
     }
@@ -2204,7 +2197,7 @@
   // If the key is not an `Object` or is an `Array`,
   // then simply set it. Merging is for Objects.
   //
-  if (typeof value !== &#x27;object&#x27; || Array.isArray(value) || value === null) {
+  if (typeof value !== 'object' || Array.isArray(value) || value === null) {
     return this.set(key, value);
   }
 
@@ -2221,7 +2214,7 @@
   //
   // Scope into the object to get the appropriate nested context
   //
-  while (path.length &#x3e; 1) {
+  while (path.length &gt; 1) {
     key = path.shift();
     if (!target[key]) {
       target[key] = {};
@@ -2238,7 +2231,7 @@
   // or is an `Array` then simply override it because the new value
   // is an Object.
   //
-  if (typeof target[key] !== &#x27;object&#x27; || Array.isArray(target[key])) {
+  if (typeof target[key] !== 'object' || Array.isArray(target[key])) {
     target[key] = value;
     return true;
   }
@@ -2292,7 +2285,7 @@
     //
     // Root must be an object
     //
-    if (!value || typeof value !== &#x27;object&#x27;) {
+    if (!value || typeof value !== 'object') {
       return false;
     }
     else {
@@ -2310,9 +2303,9 @@
   //
   // Scope into the object to get the appropriate nested context
   //
-  while (path.length &#x3e; 1) {
+  while (path.length &gt; 1) {
     key = path.shift();
-    if (!target[key] || typeof target[key] !== &#x27;object&#x27;) {
+    if (!target[key] || typeof target[key] !== 'object') {
       target[key] = {};
     }
 
@@ -2360,8 +2353,8 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Provider.prototype._execute = function (action, syncLength) {
   var args = Array.prototype.slice.call(arguments, 2),
-      callback = typeof args[args.length - 1] === &#x27;function&#x27; &#x26;&#x26; args.pop(),
-      destructive = [&#x27;set&#x27;, &#x27;clear&#x27;, &#x27;merge&#x27;, &#x27;reset&#x27;].indexOf(action) !== -1,
+      callback = typeof args[args.length - 1] === 'function' &amp;&amp; args.pop(),
+      destructive = ['set', 'clear', 'merge', 'reset'].indexOf(action) !== -1,
       self = this,
       response,
       mergeObjs = [],
@@ -2371,11 +2364,11 @@
   function runAction (name, next) {
     var store = self.stores[name];
 
-    if (destructive &#x26;&#x26; store.readOnly) {
+    if (destructive &amp;&amp; store.readOnly) {
       return next();
     }
 
-    return store[action].length &#x3e; syncLength
+    return store[action].length &gt; syncLength
       ? store[action].apply(store, args.concat(next))
       : next(null, store[action].apply(store, args));
   }
@@ -2387,17 +2380,17 @@
   }
 
   keys.forEach(function (name) {
-    if (typeof response === &#x27;undefined&#x27;) {
+    if (typeof response === 'undefined') {
       var store = self.stores[name];
 
-      if (destructive &#x26;&#x26; store.readOnly) {
+      if (destructive &amp;&amp; store.readOnly) {
         return;
       }
 
       response = store[action].apply(store, args);
 
       // Merge objects if necessary
-      if (response &#x26;&#x26; action === &#x27;get&#x27; &#x26;&#x26; typeof response === &#x27;object&#x27; &#x26;&#x26; !Array.isArray(response)) {
+      if (response &amp;&amp; action === 'get' &amp;&amp; typeof response === 'object' &amp;&amp; !Array.isArray(response)) {
         mergeObjs.push(response);
         response = undefined;
       }
@@ -2426,8 +2419,8 @@
   options  = options      || {};
   var type = options.type || name;
 
-  if (!require(&#x27;../nconf&#x27;)[common.capitalize(type)]) {
-    throw new Error(&#x27;Cannot add store with unknown type: &#x27; + type);
+  if (!require('../nconf')[common.capitalize(type)]) {
+    throw new Error('Cannot add store with unknown type: ' + type);
   }
 
   this.stores[name] = this.create(type, options, usage);
@@ -2467,7 +2460,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Provider.prototype.clear = function (key, callback) {
-  return this._execute(&#x27;clear&#x27;, 1, key, callback);
+  return this._execute('clear', 1, key, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2482,7 +2475,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Provider.prototype.create = function (type, options, usage) {
-  return new (require(&#x27;../nconf&#x27;)[common.capitalize(type.toLowerCase())])(options, usage);
+  return new (require('../nconf')[common.capitalize(type.toLowerCase())])(options, usage);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2499,7 +2492,7 @@
     <li>description and source-code<pre class="apidocCodePre">Provider.prototype.defaults = function (options) {
   options = options || {};
   if (!options.type) {
-    options.type = &#x27;literal&#x27;;
+    options.type = 'literal';
   }
 
   return this.add(type, options);
@@ -2534,16 +2527,16 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Provider.prototype.file = function (key, options) {
   if (arguments.length == 1) {
-    options = typeof key === &#x27;string&#x27; ? { file: key } : key;
-    key = &#x27;file&#x27;;
+    options = typeof key === 'string' ? { file: key } : key;
+    key = 'file';
   }
   else {
-    options = typeof options === &#x27;string&#x27;
+    options = typeof options === 'string'
       ? { file: options }
       : options;
   }
 
-  options.type = &#x27;file&#x27;;
+  options.type = 'file';
   return this.add(key, options);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -2559,7 +2552,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Provider.prototype.get = function (key, callback) {
-  if (typeof key === &#x27;function&#x27;) {
+  if (typeof key === 'function') {
     // Allow a * key call to be made
     callback = key;
     key = null;
@@ -2570,7 +2563,7 @@
   // logic for traversing stores.
   //
   if (!callback) {
-    return this._execute(&#x27;get&#x27;, 1, key, callback);
+    return this._execute('get', 1, key, callback);
   }
 
   //
@@ -2585,12 +2578,12 @@
       mergeObjs = [];
 
   async.whilst(function () {
-    return typeof response === &#x27;undefined&#x27; &#x26;&#x26; current &#x3c; names.length;
+    return typeof response === 'undefined' &amp;&amp; current &lt; names.length;
   }, function (next) {
     var store = self.stores[names[current]];
     current++;
 
-    if (store.get.length &#x3e;= 2) {
+    if (store.get.length &gt;= 2) {
       return store.get(key, function (err, value) {
         if (err) {
           return next(err);
@@ -2599,7 +2592,7 @@
         response = value;
 
         // Merge objects if necessary
-        if (response &#x26;&#x26; typeof response === &#x27;object&#x27; &#x26;&#x26; !Array.isArray(response)) {
+        if (response &amp;&amp; typeof response === 'object' &amp;&amp; !Array.isArray(response)) {
           mergeObjs.push(response);
           response = undefined;
         }
@@ -2611,14 +2604,14 @@
     response = store.get(key);
 
     // Merge objects if necessary
-    if (response &#x26;&#x26; typeof response === &#x27;object&#x27; &#x26;&#x26; !Array.isArray(response)) {
+    if (response &amp;&amp; typeof response === 'object' &amp;&amp; !Array.isArray(response)) {
       mergeObjs.push(response);
       response = undefined;
     }
 
     next();
   }, function (err) {
-    if (!err &#x26;&#x26; mergeObjs.length) {
+    if (!err &amp;&amp; mergeObjs.length) {
       response = common.merge(mergeObjs.reverse());
     }
     return err ? callback(err) : callback(null, response);
@@ -2694,15 +2687,15 @@
 
   function loadStoreSync(store) {
     if (!store.loadSync) {
-      throw new Error(&#x27;nconf store &#x27; + store.type + &#x27; has no loadSync() method&#x27;);
+      throw new Error('nconf store ' + store.type + ' has no loadSync() method');
     }
 
     return store.loadSync();
   }
 
   function loadStore(store, next) {
-    if (!store.load &#x26;&#x26; !store.loadSync) {
-      return next(new Error(&#x27;nconf store &#x27; + store.type + &#x27; has no load() method&#x27;));
+    if (!store.load &amp;&amp; !store.loadSync) {
+      return next(new Error('nconf store ' + store.type + ' has no load() method'));
     }
 
     return store.loadSync
@@ -2725,9 +2718,9 @@
     // If `data` was returned then merge it into
     // the system store.
     //
-    if (data &#x26;&#x26; typeof data === &#x27;object&#x27;) {
-      self.use(&#x27;sources&#x27;, {
-        type: &#x27;literal&#x27;,
+    if (data &amp;&amp; typeof data === 'object') {
+      self.use('sources', {
+        type: 'literal',
         store: data
       });
     }
@@ -2738,7 +2731,7 @@
     sourceHierarchy.reverse();
 
     //
-    // If we don&#x27;t have a callback and the current
+    // If we don't have a callback and the current
     // store is capable of loading synchronously
     // then do so.
     //
@@ -2776,23 +2769,23 @@
     <li>description and source-code<pre class="apidocCodePre">Provider.prototype.merge = function () {
   var self = this,
       args = Array.prototype.slice.call(arguments),
-      callback = typeof args[args.length - 1] === &#x27;function&#x27; &#x26;&#x26; args.pop(),
+      callback = typeof args[args.length - 1] === 'function' &amp;&amp; args.pop(),
       value = args.pop(),
       key = args.pop();
 
   function mergeProperty (prop, next) {
-    return self._execute(&#x27;merge&#x27;, 2, prop, value[prop], next);
+    return self._execute('merge', 2, prop, value[prop], next);
   }
 
   if (!key) {
-    if (Array.isArray(value) || typeof value !== &#x27;object&#x27;) {
-      return onError(new Error(&#x27;Cannot merge non-Object into top-level.&#x27;), callback);
+    if (Array.isArray(value) || typeof value !== 'object') {
+      return onError(new Error('Cannot merge non-Object into top-level.'), callback);
     }
 
     return async.forEach(Object.keys(value), mergeProperty, callback || function () { })
   }
 
-  return this._execute(&#x27;merge&#x27;, 2, key, value, callback);
+  return this._execute('merge', 2, key, value, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2809,7 +2802,7 @@
     <li>description and source-code<pre class="apidocCodePre">Provider.prototype.overrides = function (options) {
   options = options || {};
   if (!options.type) {
-    options.type = &#x27;literal&#x27;;
+    options.type = 'literal';
   }
 
   return this.add(type, options);
@@ -2844,18 +2837,18 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Provider.prototype.required = function (keys) {
   if (!Array.isArray(keys)) {
-    throw new Error(&#x27;Incorrect parameter, array expected&#x27;);
+    throw new Error('Incorrect parameter, array expected');
   }
 
   var missing = [];
   keys.forEach(function(key) {
-    if (typeof this.get(key) === &#x27;undefined&#x27;) {
+    if (typeof this.get(key) === 'undefined') {
       missing.push(key);
     }
   }, this);
 
   if (missing.length) {
-    throw new Error(&#x27;Missing required keys: &#x27; + missing.join(&#x27;, &#x27;));
+    throw new Error('Missing required keys: ' + missing.join(', '));
   } else {
     return true;
   }
@@ -2874,7 +2867,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Provider.prototype.reset = function (callback) {
-  return this._execute(&#x27;reset&#x27;, 0, callback);
+  return this._execute('reset', 0, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2889,7 +2882,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Provider.prototype.save = function (value, callback) {
-  if (!callback &#x26;&#x26; typeof value === &#x27;function&#x27;) {
+  if (!callback &amp;&amp; typeof value === 'function') {
     callback = value;
     value = null;
   }
@@ -2901,12 +2894,12 @@
     var store = self.stores[name];
 
     //
-    // If the `store` doesn&#x27;t have a `saveSync` method,
+    // If the `store` doesn't have a `saveSync` method,
     // just ignore it and continue.
     //
     if (store.saveSync) {
       var ret = store.saveSync();
-      if (typeof ret == &#x27;object&#x27; &#x26;&#x26; ret !== null) {
+      if (typeof ret == 'object' &amp;&amp; ret !== null) {
         memo.push(ret);
       }
     }
@@ -2917,7 +2910,7 @@
     var store = self.stores[name];
 
     //
-    // If the `store` doesn&#x27;t have a `save` or saveSync`
+    // If the `store` doesn't have a `save` or saveSync`
     // method(s), just ignore it and continue.
     //
 
@@ -2927,7 +2920,7 @@
           return next(err);
         }
 
-        if (typeof data == &#x27;object&#x27; &#x26;&#x26; data !== null) {
+        if (typeof data == 'object' &amp;&amp; data !== null) {
           memo.push(data);
         }
 
@@ -2942,7 +2935,7 @@
   }
 
   //
-  // If we don&#x27;t have a callback and the current
+  // If we don't have a callback and the current
   // store is capable of saving synchronously
   // then do so.
   //
@@ -2967,7 +2960,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Provider.prototype.set = function (key, value, callback) {
-  return this._execute(&#x27;set&#x27;, 2, key, value, callback);
+  return this._execute('set', 2, key, value, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -2992,7 +2985,7 @@
   }
 
   var store = this.stores[name],
-      update = store &#x26;&#x26; !sameOptions(store);
+      update = store &amp;&amp; !sameOptions(store);
 
   if (!store || update) {
     if (update) {
@@ -3017,7 +3010,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">key = function () {
-  return Array.prototype.slice.call(arguments).join(&#x27;:&#x27;);
+  return Array.prototype.slice.call(arguments).join(':');
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -3081,7 +3074,7 @@
   options.format = options.format || formats.json;
 
   return common.merge(options.files.map(function (file) {
-    return options.format.parse(fs.readFileSync(file, &#x27;utf8&#x27;));
+    return options.format.parse(fs.readFileSync(file, 'utf8'));
   }));
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -3097,7 +3090,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">path = function (key, separator) {
-  separator = separator || &#x27;:&#x27;;
+  separator = separator || ':';
   return key == null ? [] : key.split(separator);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -3140,7 +3133,7 @@
     <li>description and source-code<pre class="apidocCodePre">Argv = function (options, usage) {
   Memory.call(this, options);
 
-  this.type     = &#x27;argv&#x27;;
+  this.type     = 'argv';
   this.readOnly = true;
   this.options  = options || false;
   this.usage    = usage;
@@ -3159,12 +3152,12 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">super_ = function (options) {
   options       = options || {};
-  this.type     = &#x27;memory&#x27;;
+  this.type     = 'memory';
   this.store    = {};
   this.mtimes   = {};
   this.readOnly = false;
   this.loadFrom = options.loadFrom || null;
-  this.logicalSeparator = options.logicalSeparator || &#x27;:&#x27;;
+  this.logicalSeparator = options.logicalSeparator || ':';
 
   if (this.loadFrom) {
     this.store = common.loadFilesSync(this.loadFrom);
@@ -3191,11 +3184,11 @@
   var self = this,
       yargs, argv;
 
-  yargs = typeof this.options === &#x27;object&#x27;
-    ? require(&#x27;yargs&#x27;)(process.argv.slice(2)).options(this.options)
-    : require(&#x27;yargs&#x27;)(process.argv.slice(2));
+  yargs = typeof this.options === 'object'
+    ? require('yargs')(process.argv.slice(2)).options(this.options)
+    : require('yargs')(process.argv.slice(2));
 
-  if (typeof this.usage === &#x27;string&#x27;) { yargs.usage(this.usage) }
+  if (typeof this.usage === 'string') { yargs.usage(this.usage) }
 
   argv = yargs.argv
 
@@ -3205,7 +3198,7 @@
 
   this.readOnly = false;
   Object.keys(argv).forEach(function (key) {
-    if (typeof argv[key] !== &#x27;undefined&#x27;) {
+    if (typeof argv[key] !== 'undefined') {
       self.set(key, argv[key]);
     }
   });
@@ -3253,11 +3246,11 @@
   var self = this,
       yargs, argv;
 
-  yargs = typeof this.options === &#x27;object&#x27;
-    ? require(&#x27;yargs&#x27;)(process.argv.slice(2)).options(this.options)
-    : require(&#x27;yargs&#x27;)(process.argv.slice(2));
+  yargs = typeof this.options === 'object'
+    ? require('yargs')(process.argv.slice(2)).options(this.options)
+    : require('yargs')(process.argv.slice(2));
 
-  if (typeof this.usage === &#x27;string&#x27;) { yargs.usage(this.usage) }
+  if (typeof this.usage === 'string') { yargs.usage(this.usage) }
 
   argv = yargs.argv
 
@@ -3267,7 +3260,7 @@
 
   this.readOnly = false;
   Object.keys(argv).forEach(function (key) {
-    if (typeof argv[key] !== &#x27;undefined&#x27;) {
+    if (typeof argv[key] !== 'undefined') {
       self.set(key, argv[key]);
     }
   });
@@ -3320,21 +3313,21 @@
   Memory.call(this, options);
 
   options        = options || {};
-  this.type      = &#x27;env&#x27;;
+  this.type      = 'env';
   this.readOnly  = true;
   this.whitelist = options.whitelist || [];
-  this.separator = options.separator || &#x27;&#x27;;
+  this.separator = options.separator || '';
   this.lowerCase = options.lowerCase || false;
 
-  if (({}).toString.call(options.match) === &#x27;[object RegExp]&#x27;
-      &#x26;&#x26; typeof options !== &#x27;string&#x27;) {
+  if (({}).toString.call(options.match) === '[object RegExp]'
+      &amp;&amp; typeof options !== 'string') {
     this.match = options.match;
   }
 
   if (options instanceof Array) {
     this.whitelist = options;
   }
-  if (typeof(options) === &#x27;string&#x27;) {
+  if (typeof(options) === 'string') {
     this.separator = options;
   }
 }</pre></li>
@@ -3352,12 +3345,12 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">super_ = function (options) {
   options       = options || {};
-  this.type     = &#x27;memory&#x27;;
+  this.type     = 'memory';
   this.store    = {};
   this.mtimes   = {};
   this.readOnly = false;
   this.loadFrom = options.loadFrom || null;
-  this.logicalSeparator = options.logicalSeparator || &#x27;:&#x27;;
+  this.logicalSeparator = options.logicalSeparator || ':';
 
   if (this.loadFrom) {
     this.store = common.loadFilesSync(this.loadFrom);
@@ -3393,7 +3386,7 @@
 
   this.readOnly = false;
   Object.keys(env).filter(function (key) {
-    if (self.match &#x26;&#x26; self.whitelist.length) {
+    if (self.match &amp;&amp; self.whitelist.length) {
       return key.match(self.match) || self.whitelist.indexOf(key) !== -1
     }
     else if (self.match) {
@@ -3460,7 +3453,7 @@
 
   this.readOnly = false;
   Object.keys(env).filter(function (key) {
-    if (self.match &#x26;&#x26; self.whitelist.length) {
+    if (self.match &amp;&amp; self.whitelist.length) {
       return key.match(self.match) || self.whitelist.indexOf(key) !== -1
     }
     else if (self.match) {
@@ -3521,12 +3514,12 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">File = function (options) {
   if (!options || !options.file) {
-    throw new Error (&#x27;Missing required option `file`&#x27;);
+    throw new Error ('Missing required option `file`');
   }
 
   Memory.call(this, options);
 
-  this.type    = &#x27;file&#x27;;
+  this.type    = 'file';
   this.file    = options.file;
   this.dir     = options.dir    || process.cwd();
   this.format  = options.format || formats.json;
@@ -3536,17 +3529,17 @@
     || 2;
 
   if (this.secure) {
-    this.secure = Buffer.isBuffer(this.secure) || typeof this.secure === &#x27;string&#x27;
+    this.secure = Buffer.isBuffer(this.secure) || typeof this.secure === 'string'
       ? { secret: this.secure.toString() }
       : this.secure;
 
-    this.secure.alg = this.secure.alg || &#x27;aes-256-ctr&#x27;;
+    this.secure.alg = this.secure.alg || 'aes-256-ctr';
     if (this.secure.secretPath) {
-      this.secure.secret = fs.readFileSync(this.secure.secretPath, &#x27;utf8&#x27;);
+      this.secure.secret = fs.readFileSync(this.secure.secretPath, 'utf8');
     }
 
     if (!this.secure.secret) {
-      throw new Error(&#x27;secure.secret option is required&#x27;);
+      throw new Error('secure.secret option is required');
     }
 
     this.keys = new Secure({
@@ -3574,12 +3567,12 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">super_ = function (options) {
   options       = options || {};
-  this.type     = &#x27;memory&#x27;;
+  this.type     = 'memory';
   this.store    = {};
   this.mtimes   = {};
   this.readOnly = false;
   this.loadFrom = options.loadFrom || null;
-  this.logicalSeparator = options.logicalSeparator || &#x27;:&#x27;;
+  this.logicalSeparator = options.logicalSeparator || ':';
 
   if (this.loadFrom) {
     this.store = common.loadFilesSync(this.loadFrom);
@@ -3621,14 +3614,14 @@
       try {
         // Deals with string that include BOM
         var stringData = data.toString();
-        if (stringData.charAt(0) === &#x27;\uFEFF&#x27;) {
+        if (stringData.charAt(0) === '\uFEFF') {
           stringData = stringData.substr(1);
         }
 
         self.store = self.parse(stringData);
       }
       catch (ex) {
-        return callback(new Error(&#x22;Error parsing your configuration file: [&#x22; + self.file + &#x27;]: &#x27; + ex.message));
+        return callback(new Error("Error parsing your configuration file: [" + self.file + ']: ' + ex.message));
       }
 
       callback(null, self.store);
@@ -3638,7 +3631,7 @@
     <li>example usage<pre class="apidocCodePre">...
 ``` js
 nconf.defaults({
-  &#x27;some&#x27;: &#x27;default value&#x27;
+  'some': 'default value'
 });
 ```
 
@@ -3651,9 +3644,9 @@ It is important to note that setting keys in the File engine will not be persist
  a custom key must be supplied as the first parameter for hierarchy to work if multiple files are used.
 
 ``` js
-nconf.file(&#x27;path/to/your/config.json&#x27;);
+nconf.file('path/to/your/config.json');
 // add multiple files, hierarchically. notice the unique key for each file
-nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
+nconf.file('user', 'path/to/your/user.json');
 ...</pre></li>
     </ul>
 
@@ -3677,15 +3670,15 @@ nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
   //
   try {
     // Deals with file that include BOM
-    var fileData = fs.readFileSync(this.file, &#x27;utf8&#x27;);
-    if (fileData.charAt(0) === &#x27;\uFEFF&#x27;) {
+    var fileData = fs.readFileSync(this.file, 'utf8');
+    if (fileData.charAt(0) === '\uFEFF') {
       fileData = fileData.substr(1);
     }
 
     this.store = this.parse(fileData);
   }
   catch (ex) {
-    throw new Error(&#x22;Error parsing your configuration file: [&#x22; + this.file + &#x27;]: &#x27; + ex.message);
+    throw new Error("Error parsing your configuration file: [" + this.file + ']: ' + ex.message);
   }
 
   return this.store;
@@ -3714,13 +3707,13 @@ nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
 
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  console.log(&#x27;database: &#x27; + nconf.get(&#x27;database&#x27;));
+  console.log('database: ' + nconf.get('database'));
 
   //
   // Save the configuration object to disk
   //
   nconf.save(function (err) {
-    fs.readFile(&#x27;path/to/your/config.json&#x27;, function (err, data) {
+    fs.readFile('path/to/your/config.json', function (err, data) {
       console.dir(JSON.<span class="apidocCodeKeywordSpan">parse</span>(data.toString()))
     });
   });
@@ -3750,15 +3743,15 @@ If you run the above script:
   fs.writeFile(this.file, this.stringify(), callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
-  console.log(&#x27;NODE_ENV: &#x27; + nconf.get(&#x27;NODE_ENV&#x27;));
-  console.log(&#x27;database: &#x27; + nconf.get(&#x27;database&#x27;));
+  console.log('foo: ' + nconf.get('foo'));
+  console.log('NODE_ENV: ' + nconf.get('NODE_ENV'));
+  console.log('database: ' + nconf.get('database'));
 
   //
   // Save the configuration object to disk
   //
   nconf.<span class="apidocCodeKeywordSpan">save</span>(function (err) {
-    fs.readFile(&#x27;path/to/your/config.json&#x27;, function (err, data) {
+    fs.readFile('path/to/your/config.json', function (err, data) {
       console.dir(JSON.parse(data.toString()))
     });
   });
@@ -3801,10 +3794,10 @@ If you run the above script:
 
   base = base || process.cwd();
 
-  if (this.file[0] === &#x27;/&#x27;) {
+  if (this.file[0] === '/') {
     //
     // If filename for this instance is a fully qualified path
-    // (i.e. it starts with a `&#x27;/&#x27;`) then check if it exists
+    // (i.e. it starts with a `'/'`) then check if it exists
     //
     try {
       stats = fs.statSync(fs.realpathSync(this.file));
@@ -3820,7 +3813,7 @@ If you run the above script:
     }
   }
 
-  if (looking &#x26;&#x26; base) {
+  if (looking &amp;&amp; base) {
     //
     // Attempt to stat the realpath located at `base`
     // if the directory does not exist then return false.
@@ -3848,7 +3841,7 @@ If you run the above script:
 
       if (previous === base) {
         //
-        // If we&#x27;ve reached the top of the directory structure then simply use
+        // If we've reached the top of the directory structure then simply use
         // the default file path.
         //
         try {
@@ -3901,10 +3894,10 @@ If you run the above script:
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 ``` js
-  nconf.file(&#x27;path/to/your/config.json&#x27;);
+  nconf.file('path/to/your/config.json');
   // add multiple files, hierarchically. notice the unique key for each file
-  nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
-  nconf.file(&#x27;global&#x27;, &#x27;path/to/your/global.json&#x27;);
+  nconf.file('user', 'path/to/your/user.json');
+  nconf.file('global', 'path/to/your/global.json');
 ```
 
 The file store is also extensible for multiple file formats, defaulting to `JSON`. To use a custom format, simply pass a format
@@ -3952,14 +3945,14 @@ As of `nconf@0.8.0` it is now possible to encrypt and decrypt file contents usin
       try {
         // Deals with string that include BOM
         var stringData = data.toString();
-        if (stringData.charAt(0) === &#x27;\uFEFF&#x27;) {
+        if (stringData.charAt(0) === '\uFEFF') {
           stringData = stringData.substr(1);
         }
 
         self.store = self.parse(stringData);
       }
       catch (ex) {
-        return callback(new Error(&#x22;Error parsing your configuration file: [&#x22; + self.file + &#x27;]: &#x27; + ex.message));
+        return callback(new Error("Error parsing your configuration file: [" + self.file + ']: ' + ex.message));
       }
 
       callback(null, self.store);
@@ -3969,7 +3962,7 @@ As of `nconf@0.8.0` it is now possible to encrypt and decrypt file contents usin
     <li>example usage<pre class="apidocCodePre">...
 ``` js
 nconf.defaults({
-  &#x27;some&#x27;: &#x27;default value&#x27;
+  'some': 'default value'
 });
 ```
 
@@ -3982,9 +3975,9 @@ It is important to note that setting keys in the File engine will not be persist
  a custom key must be supplied as the first parameter for hierarchy to work if multiple files are used.
 
 ``` js
-nconf.file(&#x27;path/to/your/config.json&#x27;);
+nconf.file('path/to/your/config.json');
 // add multiple files, hierarchically. notice the unique key for each file
-nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
+nconf.file('user', 'path/to/your/user.json');
 ...</pre></li>
     </ul>
 
@@ -4013,15 +4006,15 @@ nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
   //
   try {
     // Deals with file that include BOM
-    var fileData = fs.readFileSync(this.file, &#x27;utf8&#x27;);
-    if (fileData.charAt(0) === &#x27;\uFEFF&#x27;) {
+    var fileData = fs.readFileSync(this.file, 'utf8');
+    if (fileData.charAt(0) === '\uFEFF') {
       fileData = fileData.substr(1);
     }
 
     this.store = this.parse(fileData);
   }
   catch (ex) {
-    throw new Error(&#x22;Error parsing your configuration file: [&#x22; + this.file + &#x27;]: &#x27; + ex.message);
+    throw new Error("Error parsing your configuration file: [" + this.file + ']: ' + ex.message);
   }
 
   return this.store;
@@ -4055,13 +4048,13 @@ nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
 
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  console.log(&#x27;database: &#x27; + nconf.get(&#x27;database&#x27;));
+  console.log('database: ' + nconf.get('database'));
 
   //
   // Save the configuration object to disk
   //
   nconf.save(function (err) {
-    fs.readFile(&#x27;path/to/your/config.json&#x27;, function (err, data) {
+    fs.readFile('path/to/your/config.json', function (err, data) {
       console.dir(JSON.<span class="apidocCodeKeywordSpan">parse</span>(data.toString()))
     });
   });
@@ -4096,15 +4089,15 @@ If you run the above script:
   fs.writeFile(this.file, this.stringify(), callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
-  console.log(&#x27;NODE_ENV: &#x27; + nconf.get(&#x27;NODE_ENV&#x27;));
-  console.log(&#x27;database: &#x27; + nconf.get(&#x27;database&#x27;));
+  console.log('foo: ' + nconf.get('foo'));
+  console.log('NODE_ENV: ' + nconf.get('NODE_ENV'));
+  console.log('database: ' + nconf.get('database'));
 
   //
   // Save the configuration object to disk
   //
   nconf.<span class="apidocCodeKeywordSpan">save</span>(function (err) {
-    fs.readFile(&#x27;path/to/your/config.json&#x27;, function (err, data) {
+    fs.readFile('path/to/your/config.json', function (err, data) {
       console.dir(JSON.parse(data.toString()))
     });
   });
@@ -4157,10 +4150,10 @@ If you run the above script:
 
   base = base || process.cwd();
 
-  if (this.file[0] === &#x27;/&#x27;) {
+  if (this.file[0] === '/') {
     //
     // If filename for this instance is a fully qualified path
-    // (i.e. it starts with a `&#x27;/&#x27;`) then check if it exists
+    // (i.e. it starts with a `'/'`) then check if it exists
     //
     try {
       stats = fs.statSync(fs.realpathSync(this.file));
@@ -4176,7 +4169,7 @@ If you run the above script:
     }
   }
 
-  if (looking &#x26;&#x26; base) {
+  if (looking &amp;&amp; base) {
     //
     // Attempt to stat the realpath located at `base`
     // if the directory does not exist then return false.
@@ -4204,7 +4197,7 @@ If you run the above script:
 
       if (previous === base) {
         //
-        // If we&#x27;ve reached the top of the directory structure then simply use
+        // If we've reached the top of the directory structure then simply use
         // the default file path.
         //
         try {
@@ -4262,10 +4255,10 @@ If you run the above script:
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 ``` js
-  nconf.file(&#x27;path/to/your/config.json&#x27;);
+  nconf.file('path/to/your/config.json');
   // add multiple files, hierarchically. notice the unique key for each file
-  nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
-  nconf.file(&#x27;global&#x27;, &#x27;path/to/your/global.json&#x27;);
+  nconf.file('user', 'path/to/your/user.json');
+  nconf.file('global', 'path/to/your/global.json');
 ```
 
 The file store is also extensible for multiple file formats, defaulting to `JSON`. To use a custom format, simply pass a format
@@ -4298,7 +4291,7 @@ As of `nconf@0.8.0` it is now possible to encrypt and decrypt file contents usin
   Memory.call(this, options);
 
   options       = options || {}
-  this.type     = &#x27;literal&#x27;;
+  this.type     = 'literal';
   this.readOnly = true;
   this.store    = options.store || options;
 }</pre></li>
@@ -4316,12 +4309,12 @@ As of `nconf@0.8.0` it is now possible to encrypt and decrypt file contents usin
     <ul>
     <li>description and source-code<pre class="apidocCodePre">super_ = function (options) {
   options       = options || {};
-  this.type     = &#x27;memory&#x27;;
+  this.type     = 'memory';
   this.store    = {};
   this.mtimes   = {};
   this.readOnly = false;
   this.loadFrom = options.loadFrom || null;
-  this.logicalSeparator = options.logicalSeparator || &#x27;:&#x27;;
+  this.logicalSeparator = options.logicalSeparator || ':';
 
   if (this.loadFrom) {
     this.store = common.loadFilesSync(this.loadFrom);
@@ -4386,12 +4379,12 @@ As of `nconf@0.8.0` it is now possible to encrypt and decrypt file contents usin
     <ul>
     <li>description and source-code<pre class="apidocCodePre">Memory = function (options) {
   options       = options || {};
-  this.type     = &#x27;memory&#x27;;
+  this.type     = 'memory';
   this.store    = {};
   this.mtimes   = {};
   this.readOnly = false;
   this.loadFrom = options.loadFrom || null;
-  this.logicalSeparator = options.logicalSeparator || &#x27;:&#x27;;
+  this.logicalSeparator = options.logicalSeparator || ':';
 
   if (this.loadFrom) {
     this.store = common.loadFilesSync(this.loadFrom);
@@ -4431,10 +4424,10 @@ As of `nconf@0.8.0` it is now possible to encrypt and decrypt file contents usin
   //
   // Scope into the object to get the appropriate nested context
   //
-  for (var i = 0; i &#x3c; path.length - 1; i++) {
+  for (var i = 0; i &lt; path.length - 1; i++) {
     key = path[i];
     value = target[key];
-    if (typeof value !== &#x27;function&#x27; &#x26;&#x26; typeof value !== &#x27;object&#x27;) {
+    if (typeof value !== 'function' &amp;&amp; typeof value !== 'object') {
       return false;
     }
     target = value;
@@ -4446,7 +4439,7 @@ As of `nconf@0.8.0` it is now possible to encrypt and decrypt file contents usin
   return true;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  nconf.required([&#x27;keya&#x27;, &#x27;keyb&#x27;]);
+  nconf.required(['keya', 'keyb']);
   // Error: Missing required keys: keyb
 ```
 
@@ -4458,7 +4451,7 @@ use()` with the appropriate arguments. All calls to `.get()`, `.set()`, `.<span 
 reset()` methods are synchronous since we are only dealing with an in-memory object.
 
 ``` js
-  nconf.use(&#x27;memory&#x27;);
+  nconf.use('memory');
 ```
 
 ### Argv
@@ -4483,9 +4476,9 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
   //
   // Scope into the object to get the appropriate nested context
   //
-  while (path.length &#x3e; 0) {
+  while (path.length &gt; 0) {
     key = path.shift();
-    if (target &#x26;&#x26; target.hasOwnProperty(key)) {
+    if (target &amp;&amp; target.hasOwnProperty(key)) {
       target = target[key];
       continue;
     }
@@ -4495,16 +4488,16 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
   return target;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-nconf.set(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
-nconf.set(&#x27;database:port&#x27;, 5984);
+nconf.set('database:host', '127.0.0.1');
+nconf.set('database:port', 5984);
 
 //
 // Get the entire database object from nconf. This will output
-// { host: &#x27;127.0.0.1&#x27;, port: 5984 }
+// { host: '127.0.0.1', port: 5984 }
 //
-console.log(&#x27;foo: &#x27; + nconf.<span class="apidocCodeKeywordSpan">get</span>(&#x27;foo&#x27;));
-console.log(&#x27;NODE_ENV: &#x27; + nconf.get(&#x27;NODE_ENV&#x27;));
-console.log(&#x27;database: &#x27; + nconf.get(&#x27;database&#x27;));
+console.log('foo: ' + nconf.<span class="apidocCodeKeywordSpan">get</span>('foo'));
+console.log('NODE_ENV: ' + nconf.get('NODE_ENV'));
+console.log('database: ' + nconf.get('database'));
 
 //
 // Save the configuration object to disk
@@ -4546,7 +4539,7 @@ nconf.save(function (err) {
   // If the key is not an `Object` or is an `Array`,
   // then simply set it. Merging is for Objects.
   //
-  if (typeof value !== &#x27;object&#x27; || Array.isArray(value) || value === null) {
+  if (typeof value !== 'object' || Array.isArray(value) || value === null) {
     return this.set(key, value);
   }
 
@@ -4563,7 +4556,7 @@ nconf.save(function (err) {
   //
   // Scope into the object to get the appropriate nested context
   //
-  while (path.length &#x3e; 1) {
+  while (path.length &gt; 1) {
     key = path.shift();
     if (!target[key]) {
       target[key] = {};
@@ -4580,7 +4573,7 @@ nconf.save(function (err) {
   // or is an `Array` then simply override it because the new value
   // is an Object.
   //
-  if (typeof target[key] !== &#x27;object&#x27; || Array.isArray(target[key])) {
+  if (typeof target[key] !== 'object' || Array.isArray(target[key])) {
     target[key] = value;
     return true;
   }
@@ -4611,7 +4604,7 @@ nconf.save(function (err) {
   return true;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  nconf.required([&#x27;keya&#x27;, &#x27;keyb&#x27;]);
+  nconf.required(['keya', 'keyb']);
   // Error: Missing required keys: keyb
 ```
 
@@ -4619,17 +4612,17 @@ nconf.save(function (err) {
 
 ### Memory
 A simple in-memory storage engine that stores a nested JSON representation of the configuration. To use this engine, just call `.
-use()` with the appropriate arguments. All calls to `.get()`, `.set()`, `.clear()`, `.<span class="apidocCodeKeywordSpan">reset</
-span>()` methods are synchronous since we are only dealing with an in-memory object.
+use()` with the appropriate arguments. All calls to `.get()`, `.set()`, `.clear()`, `.<span class="apidocCodeKeywordSpan">reset<!--
+span-->()` methods are synchronous since we are only dealing with an in-memory object.
 
 ``` js
-  nconf.use(&#x27;memory&#x27;);
+  nconf.use('memory');
 ```
 
 ### Argv
 Responsible for loading the values parsed from `process.argv` by `yargs` into the configuration hierarchy. See the [yargs option
  docs](https://github.com/bcoe/yargs#optionskey-opt) for more on the option format.
-...</pre></li>
+...</span></pre></li>
     </ul>
 
 
@@ -4653,7 +4646,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
     //
     // Root must be an object
     //
-    if (!value || typeof value !== &#x27;object&#x27;) {
+    if (!value || typeof value !== 'object') {
       return false;
     }
     else {
@@ -4671,9 +4664,9 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
   //
   // Scope into the object to get the appropriate nested context
   //
-  while (path.length &#x3e; 1) {
+  while (path.length &gt; 1) {
     key = path.shift();
-    if (!target[key] || typeof target[key] !== &#x27;object&#x27;) {
+    if (!target[key] || typeof target[key] !== 'object') {
       target[key] = {};
     }
 
@@ -4688,19 +4681,19 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
     <li>example usage<pre class="apidocCodePre">...
 nconf.argv()
  .env()
- .file({ file: &#x27;path/to/config.json&#x27; });
+ .file({ file: 'path/to/config.json' });
 
 //
 // Set a few variables on `nconf`.
 //
-nconf.<span class="apidocCodeKeywordSpan">set</span>(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
-nconf.set(&#x27;database:port&#x27;, 5984);
+nconf.<span class="apidocCodeKeywordSpan">set</span>('database:host', '127.0.0.1');
+nconf.set('database:port', 5984);
 
 //
 // Get the entire database object from nconf. This will output
-// { host: &#x27;127.0.0.1&#x27;, port: 5984 }
+// { host: '127.0.0.1', port: 5984 }
 //
-console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
+console.log('foo: ' + nconf.get('foo'));
 ...</pre></li>
     </ul>
 
@@ -4735,10 +4728,10 @@ console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
   //
   // Scope into the object to get the appropriate nested context
   //
-  for (var i = 0; i &#x3c; path.length - 1; i++) {
+  for (var i = 0; i &lt; path.length - 1; i++) {
     key = path[i];
     value = target[key];
-    if (typeof value !== &#x27;function&#x27; &#x26;&#x26; typeof value !== &#x27;object&#x27;) {
+    if (typeof value !== 'function' &amp;&amp; typeof value !== 'object') {
       return false;
     }
     target = value;
@@ -4750,7 +4743,7 @@ console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
   return true;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  nconf.required([&#x27;keya&#x27;, &#x27;keyb&#x27;]);
+  nconf.required(['keya', 'keyb']);
   // Error: Missing required keys: keyb
 ```
 
@@ -4762,7 +4755,7 @@ use()` with the appropriate arguments. All calls to `.get()`, `.set()`, `.<span 
 reset()` methods are synchronous since we are only dealing with an in-memory object.
 
 ``` js
-  nconf.use(&#x27;memory&#x27;);
+  nconf.use('memory');
 ```
 
 ### Argv
@@ -4792,9 +4785,9 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
   //
   // Scope into the object to get the appropriate nested context
   //
-  while (path.length &#x3e; 0) {
+  while (path.length &gt; 0) {
     key = path.shift();
-    if (target &#x26;&#x26; target.hasOwnProperty(key)) {
+    if (target &amp;&amp; target.hasOwnProperty(key)) {
       target = target[key];
       continue;
     }
@@ -4804,16 +4797,16 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
   return target;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-nconf.set(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
-nconf.set(&#x27;database:port&#x27;, 5984);
+nconf.set('database:host', '127.0.0.1');
+nconf.set('database:port', 5984);
 
 //
 // Get the entire database object from nconf. This will output
-// { host: &#x27;127.0.0.1&#x27;, port: 5984 }
+// { host: '127.0.0.1', port: 5984 }
 //
-console.log(&#x27;foo: &#x27; + nconf.<span class="apidocCodeKeywordSpan">get</span>(&#x27;foo&#x27;));
-console.log(&#x27;NODE_ENV: &#x27; + nconf.get(&#x27;NODE_ENV&#x27;));
-console.log(&#x27;database: &#x27; + nconf.get(&#x27;database&#x27;));
+console.log('foo: ' + nconf.<span class="apidocCodeKeywordSpan">get</span>('foo'));
+console.log('NODE_ENV: ' + nconf.get('NODE_ENV'));
+console.log('database: ' + nconf.get('database'));
 
 //
 // Save the configuration object to disk
@@ -4865,7 +4858,7 @@ nconf.save(function (err) {
   // If the key is not an `Object` or is an `Array`,
   // then simply set it. Merging is for Objects.
   //
-  if (typeof value !== &#x27;object&#x27; || Array.isArray(value) || value === null) {
+  if (typeof value !== 'object' || Array.isArray(value) || value === null) {
     return this.set(key, value);
   }
 
@@ -4882,7 +4875,7 @@ nconf.save(function (err) {
   //
   // Scope into the object to get the appropriate nested context
   //
-  while (path.length &#x3e; 1) {
+  while (path.length &gt; 1) {
     key = path.shift();
     if (!target[key]) {
       target[key] = {};
@@ -4899,7 +4892,7 @@ nconf.save(function (err) {
   // or is an `Array` then simply override it because the new value
   // is an Object.
   //
-  if (typeof target[key] !== &#x27;object&#x27; || Array.isArray(target[key])) {
+  if (typeof target[key] !== 'object' || Array.isArray(target[key])) {
     target[key] = value;
     return true;
   }
@@ -4935,7 +4928,7 @@ nconf.save(function (err) {
   return true;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  nconf.required([&#x27;keya&#x27;, &#x27;keyb&#x27;]);
+  nconf.required(['keya', 'keyb']);
   // Error: Missing required keys: keyb
 ```
 
@@ -4943,17 +4936,17 @@ nconf.save(function (err) {
 
 ### Memory
 A simple in-memory storage engine that stores a nested JSON representation of the configuration. To use this engine, just call `.
-use()` with the appropriate arguments. All calls to `.get()`, `.set()`, `.clear()`, `.<span class="apidocCodeKeywordSpan">reset</
-span>()` methods are synchronous since we are only dealing with an in-memory object.
+use()` with the appropriate arguments. All calls to `.get()`, `.set()`, `.clear()`, `.<span class="apidocCodeKeywordSpan">reset<!--
+span-->()` methods are synchronous since we are only dealing with an in-memory object.
 
 ``` js
-  nconf.use(&#x27;memory&#x27;);
+  nconf.use('memory');
 ```
 
 ### Argv
 Responsible for loading the values parsed from `process.argv` by `yargs` into the configuration hierarchy. See the [yargs option
  docs](https://github.com/bcoe/yargs#optionskey-opt) for more on the option format.
-...</pre></li>
+...</span></pre></li>
     </ul>
 
 
@@ -4982,7 +4975,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
     //
     // Root must be an object
     //
-    if (!value || typeof value !== &#x27;object&#x27;) {
+    if (!value || typeof value !== 'object') {
       return false;
     }
     else {
@@ -5000,9 +4993,9 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
   //
   // Scope into the object to get the appropriate nested context
   //
-  while (path.length &#x3e; 1) {
+  while (path.length &gt; 1) {
     key = path.shift();
-    if (!target[key] || typeof target[key] !== &#x27;object&#x27;) {
+    if (!target[key] || typeof target[key] !== 'object') {
       target[key] = {};
     }
 
@@ -5017,19 +5010,19 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
     <li>example usage<pre class="apidocCodePre">...
 nconf.argv()
  .env()
- .file({ file: &#x27;path/to/config.json&#x27; });
+ .file({ file: 'path/to/config.json' });
 
 //
 // Set a few variables on `nconf`.
 //
-nconf.<span class="apidocCodeKeywordSpan">set</span>(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
-nconf.set(&#x27;database:port&#x27;, 5984);
+nconf.<span class="apidocCodeKeywordSpan">set</span>('database:host', '127.0.0.1');
+nconf.set('database:port', 5984);
 
 //
 // Get the entire database object from nconf. This will output
-// { host: &#x27;127.0.0.1&#x27;, port: 5984 }
+// { host: '127.0.0.1', port: 5984 }
 //
-console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
+console.log('foo: ' + nconf.get('foo'));
 ...</pre></li>
     </ul>
 
@@ -5076,8 +5069,8 @@ console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
     <ul>
     <li>description and source-code<pre class="apidocCodePre">_execute = function (action, syncLength) {
   var args = Array.prototype.slice.call(arguments, 2),
-      callback = typeof args[args.length - 1] === &#x27;function&#x27; &#x26;&#x26; args.pop(),
-      destructive = [&#x27;set&#x27;, &#x27;clear&#x27;, &#x27;merge&#x27;, &#x27;reset&#x27;].indexOf(action) !== -1,
+      callback = typeof args[args.length - 1] === 'function' &amp;&amp; args.pop(),
+      destructive = ['set', 'clear', 'merge', 'reset'].indexOf(action) !== -1,
       self = this,
       response,
       mergeObjs = [],
@@ -5087,11 +5080,11 @@ console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
   function runAction (name, next) {
     var store = self.stores[name];
 
-    if (destructive &#x26;&#x26; store.readOnly) {
+    if (destructive &amp;&amp; store.readOnly) {
       return next();
     }
 
-    return store[action].length &#x3e; syncLength
+    return store[action].length &gt; syncLength
       ? store[action].apply(store, args.concat(next))
       : next(null, store[action].apply(store, args));
   }
@@ -5103,17 +5096,17 @@ console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
   }
 
   keys.forEach(function (name) {
-    if (typeof response === &#x27;undefined&#x27;) {
+    if (typeof response === 'undefined') {
       var store = self.stores[name];
 
-      if (destructive &#x26;&#x26; store.readOnly) {
+      if (destructive &amp;&amp; store.readOnly) {
         return;
       }
 
       response = store[action].apply(store, args);
 
       // Merge objects if necessary
-      if (response &#x26;&#x26; action === &#x27;get&#x27; &#x26;&#x26; typeof response === &#x27;object&#x27; &#x26;&#x26; !Array.isArray(response)) {
+      if (response &amp;&amp; action === 'get' &amp;&amp; typeof response === 'object' &amp;&amp; !Array.isArray(response)) {
         mergeObjs.push(response);
         response = undefined;
       }
@@ -5142,8 +5135,8 @@ console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
   options  = options      || {};
   var type = options.type || name;
 
-  if (!require(&#x27;../nconf&#x27;)[common.capitalize(type)]) {
-    throw new Error(&#x27;Cannot add store with unknown type: &#x27; + type);
+  if (!require('../nconf')[common.capitalize(type)]) {
+    throw new Error('Cannot add store with unknown type: ' + type);
   }
 
   this.stores[name] = this.create(type, options, usage);
@@ -5166,9 +5159,9 @@ The top-level of `nconf` is an instance of the `nconf.Provider` abstracts this a
 Adds a new store with the specified `name` and `options`. If `options.type` is not set, then `name` will be used instead:
 
 ``` js
-  nconf.add(&#x27;supplied&#x27;, { type: &#x27;literal&#x27;, store: { &#x27;some&#x27;: &#x27;config&#x27; });
-  nconf.add(&#x27;user&#x27;, { type: &#x27;file&#x27;, file: &#x27;/path/to/userconf.json&#x27; });
-  nconf.add(&#x27;global&#x27;, { type: &#x27;file&#x27;, file: &#x27;/path/to/globalconf.json&#x27; });
+  nconf.add('supplied', { type: 'literal', store: { 'some': 'config' });
+  nconf.add('user', { type: 'file', file: '/path/to/userconf.json' });
+  nconf.add('global', { type: 'file', file: '/path/to/globalconf.json' });
 ```
 ...</pre></li>
     </ul>
@@ -5192,16 +5185,16 @@ Adds a new store with the specified `name` and `options`. If `options.type` is n
 // Setup nconf to use (in-order):
 //   1. Command-line arguments
 //   2. Environment variables
-//   3. A file located at &#x27;path/to/config.json&#x27;
+//   3. A file located at 'path/to/config.json'
 //
 nconf.<span class="apidocCodeKeywordSpan">argv</span>()
  .env()
- .file({ file: &#x27;path/to/config.json&#x27; });
+ .file({ file: 'path/to/config.json' });
 
 //
 // Set a few variables on `nconf`.
 //
-nconf.set(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
+nconf.set('database:host', '127.0.0.1');
 ...</pre></li>
     </ul>
 
@@ -5215,10 +5208,10 @@ nconf.set(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">clear = function (key, callback) {
-  return this._execute(&#x27;clear&#x27;, 1, key, callback);
+  return this._execute('clear', 1, key, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  nconf.required([&#x27;keya&#x27;, &#x27;keyb&#x27;]);
+  nconf.required(['keya', 'keyb']);
   // Error: Missing required keys: keyb
 ```
 
@@ -5230,7 +5223,7 @@ use()` with the appropriate arguments. All calls to `.get()`, `.set()`, `.<span 
 reset()` methods are synchronous since we are only dealing with an in-memory object.
 
 ``` js
-  nconf.use(&#x27;memory&#x27;);
+  nconf.use('memory');
 ```
 
 ### Argv
@@ -5249,7 +5242,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">create = function (type, options, usage) {
-  return new (require(&#x27;../nconf&#x27;)[common.capitalize(type.toLowerCase())])(options, usage);
+  return new (require('../nconf')[common.capitalize(type.toLowerCase())])(options, usage);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5266,7 +5259,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
     <li>description and source-code<pre class="apidocCodePre">defaults = function (options) {
   options = options || {};
   if (!options.type) {
-    options.type = &#x27;literal&#x27;;
+    options.type = 'literal';
   }
 
   return this.add(type, options);
@@ -5276,7 +5269,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
 
 Configuration management can get complicated very quickly for even trivial applications running in production. `nconf` addresses
  this problem by enabling you to setup a hierarchy for different sources of configuration with no defaults. **The order in which
- you attach these configuration sources determines their priority in the hierarchy.** Let&#x27;s take a look at the options available
+ you attach these configuration sources determines their priority in the hierarchy.** Let's take a look at the options available
  to you
 
 1. **nconf.argv(options)** Loads `process.argv` using yargs. If `options` is supplied it is passed along to yargs.
@@ -5288,7 +5281,7 @@ Configuration management can get complicated very quickly for even trivial appli
 A sane default for this could be:
 
 ``` js
-var nconf = require(&#x27;nconf&#x27;);
+var nconf = require('nconf');
 ...</pre></li>
     </ul>
 
@@ -5310,17 +5303,17 @@ var nconf = require(&#x27;nconf&#x27;);
 // Setup nconf to use (in-order):
 //   1. Command-line arguments
 //   2. Environment variables
-//   3. A file located at &#x27;path/to/config.json&#x27;
+//   3. A file located at 'path/to/config.json'
 //
 nconf.argv()
  .<span class="apidocCodeKeywordSpan">env</span>()
- .file({ file: &#x27;path/to/config.json&#x27; });
+ .file({ file: 'path/to/config.json' });
 
 //
 // Set a few variables on `nconf`.
 //
-nconf.set(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
-nconf.set(&#x27;database:port&#x27;, 5984);
+nconf.set('database:host', '127.0.0.1');
+nconf.set('database:port', 5984);
 ...</pre></li>
     </ul>
 
@@ -5335,33 +5328,33 @@ nconf.set(&#x27;database:port&#x27;, 5984);
     <ul>
     <li>description and source-code<pre class="apidocCodePre">file = function (key, options) {
   if (arguments.length == 1) {
-    options = typeof key === &#x27;string&#x27; ? { file: key } : key;
-    key = &#x27;file&#x27;;
+    options = typeof key === 'string' ? { file: key } : key;
+    key = 'file';
   }
   else {
-    options = typeof options === &#x27;string&#x27;
+    options = typeof options === 'string'
       ? { file: options }
       : options;
   }
 
-  options.type = &#x27;file&#x27;;
+  options.type = 'file';
   return this.add(key, options);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 // Setup nconf to use (in-order):
 //   1. Command-line arguments
 //   2. Environment variables
-//   3. A file located at &#x27;path/to/config.json&#x27;
+//   3. A file located at 'path/to/config.json'
 //
 nconf.argv()
  .env()
- .<span class="apidocCodeKeywordSpan">file</span>({ file: &#x27;path/to/config.json&#x27; });
+ .<span class="apidocCodeKeywordSpan">file</span>({ file: 'path/to/config.json' });
 
 //
 // Set a few variables on `nconf`.
 //
-nconf.set(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
-nconf.set(&#x27;database:port&#x27;, 5984);
+nconf.set('database:host', '127.0.0.1');
+nconf.set('database:port', 5984);
 ...</pre></li>
     </ul>
 
@@ -5375,7 +5368,7 @@ nconf.set(&#x27;database:port&#x27;, 5984);
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">get = function (key, callback) {
-  if (typeof key === &#x27;function&#x27;) {
+  if (typeof key === 'function') {
     // Allow a * key call to be made
     callback = key;
     key = null;
@@ -5386,7 +5379,7 @@ nconf.set(&#x27;database:port&#x27;, 5984);
   // logic for traversing stores.
   //
   if (!callback) {
-    return this._execute(&#x27;get&#x27;, 1, key, callback);
+    return this._execute('get', 1, key, callback);
   }
 
   //
@@ -5401,12 +5394,12 @@ nconf.set(&#x27;database:port&#x27;, 5984);
       mergeObjs = [];
 
   async.whilst(function () {
-    return typeof response === &#x27;undefined&#x27; &#x26;&#x26; current &#x3c; names.length;
+    return typeof response === 'undefined' &amp;&amp; current &lt; names.length;
   }, function (next) {
     var store = self.stores[names[current]];
     current++;
 
-    if (store.get.length &#x3e;= 2) {
+    if (store.get.length &gt;= 2) {
       return store.get(key, function (err, value) {
         if (err) {
           return next(err);
@@ -5415,7 +5408,7 @@ nconf.set(&#x27;database:port&#x27;, 5984);
         response = value;
 
         // Merge objects if necessary
-        if (response &#x26;&#x26; typeof response === &#x27;object&#x27; &#x26;&#x26; !Array.isArray(response)) {
+        if (response &amp;&amp; typeof response === 'object' &amp;&amp; !Array.isArray(response)) {
           mergeObjs.push(response);
           response = undefined;
         }
@@ -5427,30 +5420,30 @@ nconf.set(&#x27;database:port&#x27;, 5984);
     response = store.get(key);
 
     // Merge objects if necessary
-    if (response &#x26;&#x26; typeof response === &#x27;object&#x27; &#x26;&#x26; !Array.isArray(response)) {
+    if (response &amp;&amp; typeof response === 'object' &amp;&amp; !Array.isArray(response)) {
       mergeObjs.push(response);
       response = undefined;
     }
 
     next();
   }, function (err) {
-    if (!err &#x26;&#x26; mergeObjs.length) {
+    if (!err &amp;&amp; mergeObjs.length) {
       response = common.merge(mergeObjs.reverse());
     }
     return err ? callback(err) : callback(null, response);
   });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-nconf.set(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
-nconf.set(&#x27;database:port&#x27;, 5984);
+nconf.set('database:host', '127.0.0.1');
+nconf.set('database:port', 5984);
 
 //
 // Get the entire database object from nconf. This will output
-// { host: &#x27;127.0.0.1&#x27;, port: 5984 }
+// { host: '127.0.0.1', port: 5984 }
 //
-console.log(&#x27;foo: &#x27; + nconf.<span class="apidocCodeKeywordSpan">get</span>(&#x27;foo&#x27;));
-console.log(&#x27;NODE_ENV: &#x27; + nconf.get(&#x27;NODE_ENV&#x27;));
-console.log(&#x27;database: &#x27; + nconf.get(&#x27;database&#x27;));
+console.log('foo: ' + nconf.<span class="apidocCodeKeywordSpan">get</span>('foo'));
+console.log('NODE_ENV: ' + nconf.get('NODE_ENV'));
+console.log('database: ' + nconf.get('database'));
 
 //
 // Save the configuration object to disk
@@ -5526,15 +5519,15 @@ nconf.save(function (err) {
 
   function loadStoreSync(store) {
     if (!store.loadSync) {
-      throw new Error(&#x27;nconf store &#x27; + store.type + &#x27; has no loadSync() method&#x27;);
+      throw new Error('nconf store ' + store.type + ' has no loadSync() method');
     }
 
     return store.loadSync();
   }
 
   function loadStore(store, next) {
-    if (!store.load &#x26;&#x26; !store.loadSync) {
-      return next(new Error(&#x27;nconf store &#x27; + store.type + &#x27; has no load() method&#x27;));
+    if (!store.load &amp;&amp; !store.loadSync) {
+      return next(new Error('nconf store ' + store.type + ' has no load() method'));
     }
 
     return store.loadSync
@@ -5557,9 +5550,9 @@ nconf.save(function (err) {
     // If `data` was returned then merge it into
     // the system store.
     //
-    if (data &#x26;&#x26; typeof data === &#x27;object&#x27;) {
-      self.use(&#x27;sources&#x27;, {
-        type: &#x27;literal&#x27;,
+    if (data &amp;&amp; typeof data === 'object') {
+      self.use('sources', {
+        type: 'literal',
         store: data
       });
     }
@@ -5570,7 +5563,7 @@ nconf.save(function (err) {
     sourceHierarchy.reverse();
 
     //
-    // If we don&#x27;t have a callback and the current
+    // If we don't have a callback and the current
     // store is capable of loading synchronously
     // then do so.
     //
@@ -5596,7 +5589,7 @@ nconf.save(function (err) {
     <li>example usage<pre class="apidocCodePre">...
 ``` js
 nconf.defaults({
-  &#x27;some&#x27;: &#x27;default value&#x27;
+  'some': 'default value'
 });
 ```
 
@@ -5609,9 +5602,9 @@ It is important to note that setting keys in the File engine will not be persist
  a custom key must be supplied as the first parameter for hierarchy to work if multiple files are used.
 
 ``` js
-nconf.file(&#x27;path/to/your/config.json&#x27;);
+nconf.file('path/to/your/config.json');
 // add multiple files, hierarchically. notice the unique key for each file
-nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
+nconf.file('user', 'path/to/your/user.json');
 ...</pre></li>
     </ul>
 
@@ -5627,23 +5620,23 @@ nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
     <li>description and source-code<pre class="apidocCodePre">merge = function () {
   var self = this,
       args = Array.prototype.slice.call(arguments),
-      callback = typeof args[args.length - 1] === &#x27;function&#x27; &#x26;&#x26; args.pop(),
+      callback = typeof args[args.length - 1] === 'function' &amp;&amp; args.pop(),
       value = args.pop(),
       key = args.pop();
 
   function mergeProperty (prop, next) {
-    return self._execute(&#x27;merge&#x27;, 2, prop, value[prop], next);
+    return self._execute('merge', 2, prop, value[prop], next);
   }
 
   if (!key) {
-    if (Array.isArray(value) || typeof value !== &#x27;object&#x27;) {
-      return onError(new Error(&#x27;Cannot merge non-Object into top-level.&#x27;), callback);
+    if (Array.isArray(value) || typeof value !== 'object') {
+      return onError(new Error('Cannot merge non-Object into top-level.'), callback);
     }
 
     return async.forEach(Object.keys(value), mergeProperty, callback || function () { })
   }
 
-  return this._execute(&#x27;merge&#x27;, 2, key, value, callback);
+  return this._execute('merge', 2, key, value, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -5660,7 +5653,7 @@ nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
     <li>description and source-code<pre class="apidocCodePre">overrides = function (options) {
   options = options || {};
   if (!options.type) {
-    options.type = &#x27;literal&#x27;;
+    options.type = 'literal';
   }
 
   return this.add(type, options);
@@ -5669,7 +5662,7 @@ nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
 
 Configuration management can get complicated very quickly for even trivial applications running in production. `nconf` addresses
  this problem by enabling you to setup a hierarchy for different sources of configuration with no defaults. **The order in which
- you attach these configuration sources determines their priority in the hierarchy.** Let&#x27;s take a look at the options available
+ you attach these configuration sources determines their priority in the hierarchy.** Let's take a look at the options available
  to you
 
 1. **nconf.argv(options)** Loads `process.argv` using yargs. If `options` is supplied it is passed along to yargs.
@@ -5681,7 +5674,7 @@ Configuration management can get complicated very quickly for even trivial appli
 A sane default for this could be:
 
 ``` js
-var nconf = require(&#x27;nconf&#x27;);
+var nconf = require('nconf');
 
 //
 ...</pre></li>
@@ -5705,14 +5698,14 @@ var nconf = require(&#x27;nconf&#x27;);
   //
   // Replace the file store with new settings
   //
-  nconf.use(&#x27;file&#x27;, { file: &#x27;path/to/a-new/config-file.json&#x27; });
+  nconf.use('file', { file: 'path/to/a-new/config-file.json' });
 ```
 
 ### nconf.<span class="apidocCodeKeywordSpan">remove</span>(name)
 Removes the store with the specified `name.` The configuration stored at that level will no longer be used for lookup(s).
 
 ``` js
-  nconf.remove(&#x27;file&#x27;);
+  nconf.remove('file');
 ```y
 
 ### nconf.required(keys)
@@ -5730,18 +5723,18 @@ Removes the store with the specified `name.` The configuration stored at that le
     <ul>
     <li>description and source-code<pre class="apidocCodePre">required = function (keys) {
   if (!Array.isArray(keys)) {
-    throw new Error(&#x27;Incorrect parameter, array expected&#x27;);
+    throw new Error('Incorrect parameter, array expected');
   }
 
   var missing = [];
   keys.forEach(function(key) {
-    if (typeof this.get(key) === &#x27;undefined&#x27;) {
+    if (typeof this.get(key) === 'undefined') {
       missing.push(key);
     }
   }, this);
 
   if (missing.length) {
-    throw new Error(&#x27;Missing required keys: &#x27; + missing.join(&#x27;, &#x27;));
+    throw new Error('Missing required keys: ' + missing.join(', '));
   } else {
     return true;
   }
@@ -5752,7 +5745,7 @@ Removes the store with the specified `name.` The configuration stored at that le
 Removes the store with the specified `name.` The configuration stored at that level will no longer be used for lookup(s).
 
 ``` js
-nconf.remove(&#x27;file&#x27;);
+nconf.remove('file');
 ```y
 
 ### nconf.<span class="apidocCodeKeywordSpan">required</span>(keys)
@@ -5760,7 +5753,7 @@ Declares a set of string keys to be mandatory, and throw an error if any are mis
 
 ```js
 nconf.defaults({
-  keya: &#x27;a&#x27;,
+  keya: 'a',
 });
 ...</pre></li>
     </ul>
@@ -5775,10 +5768,10 @@ nconf.defaults({
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">reset = function (callback) {
-  return this._execute(&#x27;reset&#x27;, 0, callback);
+  return this._execute('reset', 0, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  nconf.required([&#x27;keya&#x27;, &#x27;keyb&#x27;]);
+  nconf.required(['keya', 'keyb']);
   // Error: Missing required keys: keyb
 ```
 
@@ -5786,17 +5779,17 @@ nconf.defaults({
 
 ### Memory
 A simple in-memory storage engine that stores a nested JSON representation of the configuration. To use this engine, just call `.
-use()` with the appropriate arguments. All calls to `.get()`, `.set()`, `.clear()`, `.<span class="apidocCodeKeywordSpan">reset</
-span>()` methods are synchronous since we are only dealing with an in-memory object.
+use()` with the appropriate arguments. All calls to `.get()`, `.set()`, `.clear()`, `.<span class="apidocCodeKeywordSpan">reset<!--
+span-->()` methods are synchronous since we are only dealing with an in-memory object.
 
 ``` js
-  nconf.use(&#x27;memory&#x27;);
+  nconf.use('memory');
 ```
 
 ### Argv
 Responsible for loading the values parsed from `process.argv` by `yargs` into the configuration hierarchy. See the [yargs option
  docs](https://github.com/bcoe/yargs#optionskey-opt) for more on the option format.
-...</pre></li>
+...</span></pre></li>
     </ul>
 
 
@@ -5809,7 +5802,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">save = function (value, callback) {
-  if (!callback &#x26;&#x26; typeof value === &#x27;function&#x27;) {
+  if (!callback &amp;&amp; typeof value === 'function') {
     callback = value;
     value = null;
   }
@@ -5821,12 +5814,12 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
     var store = self.stores[name];
 
     //
-    // If the `store` doesn&#x27;t have a `saveSync` method,
+    // If the `store` doesn't have a `saveSync` method,
     // just ignore it and continue.
     //
     if (store.saveSync) {
       var ret = store.saveSync();
-      if (typeof ret == &#x27;object&#x27; &#x26;&#x26; ret !== null) {
+      if (typeof ret == 'object' &amp;&amp; ret !== null) {
         memo.push(ret);
       }
     }
@@ -5837,7 +5830,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
     var store = self.stores[name];
 
     //
-    // If the `store` doesn&#x27;t have a `save` or saveSync`
+    // If the `store` doesn't have a `save` or saveSync`
     // method(s), just ignore it and continue.
     //
 
@@ -5847,7 +5840,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
           return next(err);
         }
 
-        if (typeof data == &#x27;object&#x27; &#x26;&#x26; data !== null) {
+        if (typeof data == 'object' &amp;&amp; data !== null) {
           memo.push(data);
         }
 
@@ -5862,7 +5855,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
   }
 
   //
-  // If we don&#x27;t have a callback and the current
+  // If we don't have a callback and the current
   // store is capable of saving synchronously
   // then do so.
   //
@@ -5875,15 +5868,15 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
   });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
-  console.log(&#x27;NODE_ENV: &#x27; + nconf.get(&#x27;NODE_ENV&#x27;));
-  console.log(&#x27;database: &#x27; + nconf.get(&#x27;database&#x27;));
+  console.log('foo: ' + nconf.get('foo'));
+  console.log('NODE_ENV: ' + nconf.get('NODE_ENV'));
+  console.log('database: ' + nconf.get('database'));
 
   //
   // Save the configuration object to disk
   //
   nconf.<span class="apidocCodeKeywordSpan">save</span>(function (err) {
-    fs.readFile(&#x27;path/to/your/config.json&#x27;, function (err, data) {
+    fs.readFile('path/to/your/config.json', function (err, data) {
       console.dir(JSON.parse(data.toString()))
     });
   });
@@ -5903,24 +5896,24 @@ If you run the above script:
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">set = function (key, value, callback) {
-  return this._execute(&#x27;set&#x27;, 2, key, value, callback);
+  return this._execute('set', 2, key, value, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 nconf.argv()
  .env()
- .file({ file: &#x27;path/to/config.json&#x27; });
+ .file({ file: 'path/to/config.json' });
 
 //
 // Set a few variables on `nconf`.
 //
-nconf.<span class="apidocCodeKeywordSpan">set</span>(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
-nconf.set(&#x27;database:port&#x27;, 5984);
+nconf.<span class="apidocCodeKeywordSpan">set</span>('database:host', '127.0.0.1');
+nconf.set('database:port', 5984);
 
 //
 // Get the entire database object from nconf. This will output
-// { host: &#x27;127.0.0.1&#x27;, port: 5984 }
+// { host: '127.0.0.1', port: 5984 }
 //
-console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
+console.log('foo: ' + nconf.get('foo'));
 ...</pre></li>
     </ul>
 
@@ -5944,7 +5937,7 @@ console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
   }
 
   var store = this.stores[name],
-      update = store &#x26;&#x26; !sameOptions(store);
+      update = store &amp;&amp; !sameOptions(store);
 
   if (!store || update) {
     if (update) {
@@ -5959,9 +5952,9 @@ console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
     <li>example usage<pre class="apidocCodePre">...
 
 ``` js
-nconf.add(&#x27;supplied&#x27;, { type: &#x27;literal&#x27;, store: { &#x27;some&#x27;: &#x27;config&#x27; });
-nconf.add(&#x27;user&#x27;, { type: &#x27;file&#x27;, file: &#x27;/path/to/userconf.json&#x27; });
-nconf.add(&#x27;global&#x27;, { type: &#x27;file&#x27;, file: &#x27;/path/to/globalconf.json&#x27; });
+nconf.add('supplied', { type: 'literal', store: { 'some': 'config' });
+nconf.add('user', { type: 'file', file: '/path/to/userconf.json' });
+nconf.add('global', { type: 'file', file: '/path/to/globalconf.json' });
 ```
 
 ### nconf.<span class="apidocCodeKeywordSpan">use</span>(name, options)
@@ -5971,7 +5964,7 @@ Similar to `nconf.add`, except that it can replace an existing store if new opti
 //
 // Load a file store onto nconf with the specified settings
 //
-nconf.use(&#x27;file&#x27;, { file: &#x27;/path/to/some/config-file.json&#x27; });
+nconf.use('file', { file: '/path/to/some/config-file.json' });
 ...</pre></li>
     </ul>
 
@@ -5991,8 +5984,8 @@ nconf.use(&#x27;file&#x27;, { file: &#x27;/path/to/some/config-file.json&#x27; }
     <ul>
     <li>description and source-code<pre class="apidocCodePre">_execute = function (action, syncLength) {
   var args = Array.prototype.slice.call(arguments, 2),
-      callback = typeof args[args.length - 1] === &#x27;function&#x27; &#x26;&#x26; args.pop(),
-      destructive = [&#x27;set&#x27;, &#x27;clear&#x27;, &#x27;merge&#x27;, &#x27;reset&#x27;].indexOf(action) !== -1,
+      callback = typeof args[args.length - 1] === 'function' &amp;&amp; args.pop(),
+      destructive = ['set', 'clear', 'merge', 'reset'].indexOf(action) !== -1,
       self = this,
       response,
       mergeObjs = [],
@@ -6002,11 +5995,11 @@ nconf.use(&#x27;file&#x27;, { file: &#x27;/path/to/some/config-file.json&#x27; }
   function runAction (name, next) {
     var store = self.stores[name];
 
-    if (destructive &#x26;&#x26; store.readOnly) {
+    if (destructive &amp;&amp; store.readOnly) {
       return next();
     }
 
-    return store[action].length &#x3e; syncLength
+    return store[action].length &gt; syncLength
       ? store[action].apply(store, args.concat(next))
       : next(null, store[action].apply(store, args));
   }
@@ -6018,17 +6011,17 @@ nconf.use(&#x27;file&#x27;, { file: &#x27;/path/to/some/config-file.json&#x27; }
   }
 
   keys.forEach(function (name) {
-    if (typeof response === &#x27;undefined&#x27;) {
+    if (typeof response === 'undefined') {
       var store = self.stores[name];
 
-      if (destructive &#x26;&#x26; store.readOnly) {
+      if (destructive &amp;&amp; store.readOnly) {
         return;
       }
 
       response = store[action].apply(store, args);
 
       // Merge objects if necessary
-      if (response &#x26;&#x26; action === &#x27;get&#x27; &#x26;&#x26; typeof response === &#x27;object&#x27; &#x26;&#x26; !Array.isArray(response)) {
+      if (response &amp;&amp; action === 'get' &amp;&amp; typeof response === 'object' &amp;&amp; !Array.isArray(response)) {
         mergeObjs.push(response);
         response = undefined;
       }
@@ -6062,8 +6055,8 @@ nconf.use(&#x27;file&#x27;, { file: &#x27;/path/to/some/config-file.json&#x27; }
   options  = options      || {};
   var type = options.type || name;
 
-  if (!require(&#x27;../nconf&#x27;)[common.capitalize(type)]) {
-    throw new Error(&#x27;Cannot add store with unknown type: &#x27; + type);
+  if (!require('../nconf')[common.capitalize(type)]) {
+    throw new Error('Cannot add store with unknown type: ' + type);
   }
 
   this.stores[name] = this.create(type, options, usage);
@@ -6086,9 +6079,9 @@ The top-level of `nconf` is an instance of the `nconf.Provider` abstracts this a
 Adds a new store with the specified `name` and `options`. If `options.type` is not set, then `name` will be used instead:
 
 ``` js
-  nconf.add(&#x27;supplied&#x27;, { type: &#x27;literal&#x27;, store: { &#x27;some&#x27;: &#x27;config&#x27; });
-  nconf.add(&#x27;user&#x27;, { type: &#x27;file&#x27;, file: &#x27;/path/to/userconf.json&#x27; });
-  nconf.add(&#x27;global&#x27;, { type: &#x27;file&#x27;, file: &#x27;/path/to/globalconf.json&#x27; });
+  nconf.add('supplied', { type: 'literal', store: { 'some': 'config' });
+  nconf.add('user', { type: 'file', file: '/path/to/userconf.json' });
+  nconf.add('global', { type: 'file', file: '/path/to/globalconf.json' });
 ```
 ...</pre></li>
     </ul>
@@ -6117,16 +6110,16 @@ Adds a new store with the specified `name` and `options`. If `options.type` is n
 // Setup nconf to use (in-order):
 //   1. Command-line arguments
 //   2. Environment variables
-//   3. A file located at &#x27;path/to/config.json&#x27;
+//   3. A file located at 'path/to/config.json'
 //
 nconf.<span class="apidocCodeKeywordSpan">argv</span>()
  .env()
- .file({ file: &#x27;path/to/config.json&#x27; });
+ .file({ file: 'path/to/config.json' });
 
 //
 // Set a few variables on `nconf`.
 //
-nconf.set(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
+nconf.set('database:host', '127.0.0.1');
 ...</pre></li>
     </ul>
 
@@ -6145,10 +6138,10 @@ nconf.set(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">clear = function (key, callback) {
-  return this._execute(&#x27;clear&#x27;, 1, key, callback);
+  return this._execute('clear', 1, key, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  nconf.required([&#x27;keya&#x27;, &#x27;keyb&#x27;]);
+  nconf.required(['keya', 'keyb']);
   // Error: Missing required keys: keyb
 ```
 
@@ -6160,7 +6153,7 @@ use()` with the appropriate arguments. All calls to `.get()`, `.set()`, `.<span 
 reset()` methods are synchronous since we are only dealing with an in-memory object.
 
 ``` js
-  nconf.use(&#x27;memory&#x27;);
+  nconf.use('memory');
 ```
 
 ### Argv
@@ -6184,7 +6177,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">create = function (type, options, usage) {
-  return new (require(&#x27;../nconf&#x27;)[common.capitalize(type.toLowerCase())])(options, usage);
+  return new (require('../nconf')[common.capitalize(type.toLowerCase())])(options, usage);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -6206,7 +6199,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
     <li>description and source-code<pre class="apidocCodePre">defaults = function (options) {
   options = options || {};
   if (!options.type) {
-    options.type = &#x27;literal&#x27;;
+    options.type = 'literal';
   }
 
   return this.add(type, options);
@@ -6216,7 +6209,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
 
 Configuration management can get complicated very quickly for even trivial applications running in production. `nconf` addresses
  this problem by enabling you to setup a hierarchy for different sources of configuration with no defaults. **The order in which
- you attach these configuration sources determines their priority in the hierarchy.** Let&#x27;s take a look at the options available
+ you attach these configuration sources determines their priority in the hierarchy.** Let's take a look at the options available
  to you
 
 1. **nconf.argv(options)** Loads `process.argv` using yargs. If `options` is supplied it is passed along to yargs.
@@ -6228,7 +6221,7 @@ Configuration management can get complicated very quickly for even trivial appli
 A sane default for this could be:
 
 ``` js
-var nconf = require(&#x27;nconf&#x27;);
+var nconf = require('nconf');
 ...</pre></li>
     </ul>
 
@@ -6255,17 +6248,17 @@ var nconf = require(&#x27;nconf&#x27;);
 // Setup nconf to use (in-order):
 //   1. Command-line arguments
 //   2. Environment variables
-//   3. A file located at &#x27;path/to/config.json&#x27;
+//   3. A file located at 'path/to/config.json'
 //
 nconf.argv()
  .<span class="apidocCodeKeywordSpan">env</span>()
- .file({ file: &#x27;path/to/config.json&#x27; });
+ .file({ file: 'path/to/config.json' });
 
 //
 // Set a few variables on `nconf`.
 //
-nconf.set(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
-nconf.set(&#x27;database:port&#x27;, 5984);
+nconf.set('database:host', '127.0.0.1');
+nconf.set('database:port', 5984);
 ...</pre></li>
     </ul>
 
@@ -6285,33 +6278,33 @@ nconf.set(&#x27;database:port&#x27;, 5984);
     <ul>
     <li>description and source-code<pre class="apidocCodePre">file = function (key, options) {
   if (arguments.length == 1) {
-    options = typeof key === &#x27;string&#x27; ? { file: key } : key;
-    key = &#x27;file&#x27;;
+    options = typeof key === 'string' ? { file: key } : key;
+    key = 'file';
   }
   else {
-    options = typeof options === &#x27;string&#x27;
+    options = typeof options === 'string'
       ? { file: options }
       : options;
   }
 
-  options.type = &#x27;file&#x27;;
+  options.type = 'file';
   return this.add(key, options);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 // Setup nconf to use (in-order):
 //   1. Command-line arguments
 //   2. Environment variables
-//   3. A file located at &#x27;path/to/config.json&#x27;
+//   3. A file located at 'path/to/config.json'
 //
 nconf.argv()
  .env()
- .<span class="apidocCodeKeywordSpan">file</span>({ file: &#x27;path/to/config.json&#x27; });
+ .<span class="apidocCodeKeywordSpan">file</span>({ file: 'path/to/config.json' });
 
 //
 // Set a few variables on `nconf`.
 //
-nconf.set(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
-nconf.set(&#x27;database:port&#x27;, 5984);
+nconf.set('database:host', '127.0.0.1');
+nconf.set('database:port', 5984);
 ...</pre></li>
     </ul>
 
@@ -6330,7 +6323,7 @@ nconf.set(&#x27;database:port&#x27;, 5984);
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">get = function (key, callback) {
-  if (typeof key === &#x27;function&#x27;) {
+  if (typeof key === 'function') {
     // Allow a * key call to be made
     callback = key;
     key = null;
@@ -6341,7 +6334,7 @@ nconf.set(&#x27;database:port&#x27;, 5984);
   // logic for traversing stores.
   //
   if (!callback) {
-    return this._execute(&#x27;get&#x27;, 1, key, callback);
+    return this._execute('get', 1, key, callback);
   }
 
   //
@@ -6356,12 +6349,12 @@ nconf.set(&#x27;database:port&#x27;, 5984);
       mergeObjs = [];
 
   async.whilst(function () {
-    return typeof response === &#x27;undefined&#x27; &#x26;&#x26; current &#x3c; names.length;
+    return typeof response === 'undefined' &amp;&amp; current &lt; names.length;
   }, function (next) {
     var store = self.stores[names[current]];
     current++;
 
-    if (store.get.length &#x3e;= 2) {
+    if (store.get.length &gt;= 2) {
       return store.get(key, function (err, value) {
         if (err) {
           return next(err);
@@ -6370,7 +6363,7 @@ nconf.set(&#x27;database:port&#x27;, 5984);
         response = value;
 
         // Merge objects if necessary
-        if (response &#x26;&#x26; typeof response === &#x27;object&#x27; &#x26;&#x26; !Array.isArray(response)) {
+        if (response &amp;&amp; typeof response === 'object' &amp;&amp; !Array.isArray(response)) {
           mergeObjs.push(response);
           response = undefined;
         }
@@ -6382,30 +6375,30 @@ nconf.set(&#x27;database:port&#x27;, 5984);
     response = store.get(key);
 
     // Merge objects if necessary
-    if (response &#x26;&#x26; typeof response === &#x27;object&#x27; &#x26;&#x26; !Array.isArray(response)) {
+    if (response &amp;&amp; typeof response === 'object' &amp;&amp; !Array.isArray(response)) {
       mergeObjs.push(response);
       response = undefined;
     }
 
     next();
   }, function (err) {
-    if (!err &#x26;&#x26; mergeObjs.length) {
+    if (!err &amp;&amp; mergeObjs.length) {
       response = common.merge(mergeObjs.reverse());
     }
     return err ? callback(err) : callback(null, response);
   });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-nconf.set(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
-nconf.set(&#x27;database:port&#x27;, 5984);
+nconf.set('database:host', '127.0.0.1');
+nconf.set('database:port', 5984);
 
 //
 // Get the entire database object from nconf. This will output
-// { host: &#x27;127.0.0.1&#x27;, port: 5984 }
+// { host: '127.0.0.1', port: 5984 }
 //
-console.log(&#x27;foo: &#x27; + nconf.<span class="apidocCodeKeywordSpan">get</span>(&#x27;foo&#x27;));
-console.log(&#x27;NODE_ENV: &#x27; + nconf.get(&#x27;NODE_ENV&#x27;));
-console.log(&#x27;database: &#x27; + nconf.get(&#x27;database&#x27;));
+console.log('foo: ' + nconf.<span class="apidocCodeKeywordSpan">get</span>('foo'));
+console.log('NODE_ENV: ' + nconf.get('NODE_ENV'));
+console.log('database: ' + nconf.get('database'));
 
 //
 // Save the configuration object to disk
@@ -6491,15 +6484,15 @@ nconf.save(function (err) {
 
   function loadStoreSync(store) {
     if (!store.loadSync) {
-      throw new Error(&#x27;nconf store &#x27; + store.type + &#x27; has no loadSync() method&#x27;);
+      throw new Error('nconf store ' + store.type + ' has no loadSync() method');
     }
 
     return store.loadSync();
   }
 
   function loadStore(store, next) {
-    if (!store.load &#x26;&#x26; !store.loadSync) {
-      return next(new Error(&#x27;nconf store &#x27; + store.type + &#x27; has no load() method&#x27;));
+    if (!store.load &amp;&amp; !store.loadSync) {
+      return next(new Error('nconf store ' + store.type + ' has no load() method'));
     }
 
     return store.loadSync
@@ -6522,9 +6515,9 @@ nconf.save(function (err) {
     // If `data` was returned then merge it into
     // the system store.
     //
-    if (data &#x26;&#x26; typeof data === &#x27;object&#x27;) {
-      self.use(&#x27;sources&#x27;, {
-        type: &#x27;literal&#x27;,
+    if (data &amp;&amp; typeof data === 'object') {
+      self.use('sources', {
+        type: 'literal',
         store: data
       });
     }
@@ -6535,7 +6528,7 @@ nconf.save(function (err) {
     sourceHierarchy.reverse();
 
     //
-    // If we don&#x27;t have a callback and the current
+    // If we don't have a callback and the current
     // store is capable of loading synchronously
     // then do so.
     //
@@ -6561,7 +6554,7 @@ nconf.save(function (err) {
     <li>example usage<pre class="apidocCodePre">...
 ``` js
 nconf.defaults({
-  &#x27;some&#x27;: &#x27;default value&#x27;
+  'some': 'default value'
 });
 ```
 
@@ -6574,9 +6567,9 @@ It is important to note that setting keys in the File engine will not be persist
  a custom key must be supplied as the first parameter for hierarchy to work if multiple files are used.
 
 ``` js
-nconf.file(&#x27;path/to/your/config.json&#x27;);
+nconf.file('path/to/your/config.json');
 // add multiple files, hierarchically. notice the unique key for each file
-nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
+nconf.file('user', 'path/to/your/user.json');
 ...</pre></li>
     </ul>
 
@@ -6597,23 +6590,23 @@ nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
     <li>description and source-code<pre class="apidocCodePre">merge = function () {
   var self = this,
       args = Array.prototype.slice.call(arguments),
-      callback = typeof args[args.length - 1] === &#x27;function&#x27; &#x26;&#x26; args.pop(),
+      callback = typeof args[args.length - 1] === 'function' &amp;&amp; args.pop(),
       value = args.pop(),
       key = args.pop();
 
   function mergeProperty (prop, next) {
-    return self._execute(&#x27;merge&#x27;, 2, prop, value[prop], next);
+    return self._execute('merge', 2, prop, value[prop], next);
   }
 
   if (!key) {
-    if (Array.isArray(value) || typeof value !== &#x27;object&#x27;) {
-      return onError(new Error(&#x27;Cannot merge non-Object into top-level.&#x27;), callback);
+    if (Array.isArray(value) || typeof value !== 'object') {
+      return onError(new Error('Cannot merge non-Object into top-level.'), callback);
     }
 
     return async.forEach(Object.keys(value), mergeProperty, callback || function () { })
   }
 
-  return this._execute(&#x27;merge&#x27;, 2, key, value, callback);
+  return this._execute('merge', 2, key, value, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -6635,7 +6628,7 @@ nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
     <li>description and source-code<pre class="apidocCodePre">overrides = function (options) {
   options = options || {};
   if (!options.type) {
-    options.type = &#x27;literal&#x27;;
+    options.type = 'literal';
   }
 
   return this.add(type, options);
@@ -6644,7 +6637,7 @@ nconf.file(&#x27;user&#x27;, &#x27;path/to/your/user.json&#x27;);
 
 Configuration management can get complicated very quickly for even trivial applications running in production. `nconf` addresses
  this problem by enabling you to setup a hierarchy for different sources of configuration with no defaults. **The order in which
- you attach these configuration sources determines their priority in the hierarchy.** Let&#x27;s take a look at the options available
+ you attach these configuration sources determines their priority in the hierarchy.** Let's take a look at the options available
  to you
 
 1. **nconf.argv(options)** Loads `process.argv` using yargs. If `options` is supplied it is passed along to yargs.
@@ -6656,7 +6649,7 @@ Configuration management can get complicated very quickly for even trivial appli
 A sane default for this could be:
 
 ``` js
-var nconf = require(&#x27;nconf&#x27;);
+var nconf = require('nconf');
 
 //
 ...</pre></li>
@@ -6685,14 +6678,14 @@ var nconf = require(&#x27;nconf&#x27;);
   //
   // Replace the file store with new settings
   //
-  nconf.use(&#x27;file&#x27;, { file: &#x27;path/to/a-new/config-file.json&#x27; });
+  nconf.use('file', { file: 'path/to/a-new/config-file.json' });
 ```
 
 ### nconf.<span class="apidocCodeKeywordSpan">remove</span>(name)
 Removes the store with the specified `name.` The configuration stored at that level will no longer be used for lookup(s).
 
 ``` js
-  nconf.remove(&#x27;file&#x27;);
+  nconf.remove('file');
 ```y
 
 ### nconf.required(keys)
@@ -6715,18 +6708,18 @@ Removes the store with the specified `name.` The configuration stored at that le
     <ul>
     <li>description and source-code<pre class="apidocCodePre">required = function (keys) {
   if (!Array.isArray(keys)) {
-    throw new Error(&#x27;Incorrect parameter, array expected&#x27;);
+    throw new Error('Incorrect parameter, array expected');
   }
 
   var missing = [];
   keys.forEach(function(key) {
-    if (typeof this.get(key) === &#x27;undefined&#x27;) {
+    if (typeof this.get(key) === 'undefined') {
       missing.push(key);
     }
   }, this);
 
   if (missing.length) {
-    throw new Error(&#x27;Missing required keys: &#x27; + missing.join(&#x27;, &#x27;));
+    throw new Error('Missing required keys: ' + missing.join(', '));
   } else {
     return true;
   }
@@ -6737,7 +6730,7 @@ Removes the store with the specified `name.` The configuration stored at that le
 Removes the store with the specified `name.` The configuration stored at that level will no longer be used for lookup(s).
 
 ``` js
-nconf.remove(&#x27;file&#x27;);
+nconf.remove('file');
 ```y
 
 ### nconf.<span class="apidocCodeKeywordSpan">required</span>(keys)
@@ -6745,7 +6738,7 @@ Declares a set of string keys to be mandatory, and throw an error if any are mis
 
 ```js
 nconf.defaults({
-  keya: &#x27;a&#x27;,
+  keya: 'a',
 });
 ...</pre></li>
     </ul>
@@ -6765,10 +6758,10 @@ nconf.defaults({
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">reset = function (callback) {
-  return this._execute(&#x27;reset&#x27;, 0, callback);
+  return this._execute('reset', 0, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  nconf.required([&#x27;keya&#x27;, &#x27;keyb&#x27;]);
+  nconf.required(['keya', 'keyb']);
   // Error: Missing required keys: keyb
 ```
 
@@ -6776,17 +6769,17 @@ nconf.defaults({
 
 ### Memory
 A simple in-memory storage engine that stores a nested JSON representation of the configuration. To use this engine, just call `.
-use()` with the appropriate arguments. All calls to `.get()`, `.set()`, `.clear()`, `.<span class="apidocCodeKeywordSpan">reset</
-span>()` methods are synchronous since we are only dealing with an in-memory object.
+use()` with the appropriate arguments. All calls to `.get()`, `.set()`, `.clear()`, `.<span class="apidocCodeKeywordSpan">reset<!--
+span-->()` methods are synchronous since we are only dealing with an in-memory object.
 
 ``` js
-  nconf.use(&#x27;memory&#x27;);
+  nconf.use('memory');
 ```
 
 ### Argv
 Responsible for loading the values parsed from `process.argv` by `yargs` into the configuration hierarchy. See the [yargs option
  docs](https://github.com/bcoe/yargs#optionskey-opt) for more on the option format.
-...</pre></li>
+...</span></pre></li>
     </ul>
 
 
@@ -6804,7 +6797,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">save = function (value, callback) {
-  if (!callback &#x26;&#x26; typeof value === &#x27;function&#x27;) {
+  if (!callback &amp;&amp; typeof value === 'function') {
     callback = value;
     value = null;
   }
@@ -6816,12 +6809,12 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
     var store = self.stores[name];
 
     //
-    // If the `store` doesn&#x27;t have a `saveSync` method,
+    // If the `store` doesn't have a `saveSync` method,
     // just ignore it and continue.
     //
     if (store.saveSync) {
       var ret = store.saveSync();
-      if (typeof ret == &#x27;object&#x27; &#x26;&#x26; ret !== null) {
+      if (typeof ret == 'object' &amp;&amp; ret !== null) {
         memo.push(ret);
       }
     }
@@ -6832,7 +6825,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
     var store = self.stores[name];
 
     //
-    // If the `store` doesn&#x27;t have a `save` or saveSync`
+    // If the `store` doesn't have a `save` or saveSync`
     // method(s), just ignore it and continue.
     //
 
@@ -6842,7 +6835,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
           return next(err);
         }
 
-        if (typeof data == &#x27;object&#x27; &#x26;&#x26; data !== null) {
+        if (typeof data == 'object' &amp;&amp; data !== null) {
           memo.push(data);
         }
 
@@ -6857,7 +6850,7 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
   }
 
   //
-  // If we don&#x27;t have a callback and the current
+  // If we don't have a callback and the current
   // store is capable of saving synchronously
   // then do so.
   //
@@ -6870,15 +6863,15 @@ Responsible for loading the values parsed from `process.argv` by `yargs` into th
   });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
-  console.log(&#x27;NODE_ENV: &#x27; + nconf.get(&#x27;NODE_ENV&#x27;));
-  console.log(&#x27;database: &#x27; + nconf.get(&#x27;database&#x27;));
+  console.log('foo: ' + nconf.get('foo'));
+  console.log('NODE_ENV: ' + nconf.get('NODE_ENV'));
+  console.log('database: ' + nconf.get('database'));
 
   //
   // Save the configuration object to disk
   //
   nconf.<span class="apidocCodeKeywordSpan">save</span>(function (err) {
-    fs.readFile(&#x27;path/to/your/config.json&#x27;, function (err, data) {
+    fs.readFile('path/to/your/config.json', function (err, data) {
       console.dir(JSON.parse(data.toString()))
     });
   });
@@ -6903,24 +6896,24 @@ If you run the above script:
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">set = function (key, value, callback) {
-  return this._execute(&#x27;set&#x27;, 2, key, value, callback);
+  return this._execute('set', 2, key, value, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 nconf.argv()
  .env()
- .file({ file: &#x27;path/to/config.json&#x27; });
+ .file({ file: 'path/to/config.json' });
 
 //
 // Set a few variables on `nconf`.
 //
-nconf.<span class="apidocCodeKeywordSpan">set</span>(&#x27;database:host&#x27;, &#x27;127.0.0.1&#x27;);
-nconf.set(&#x27;database:port&#x27;, 5984);
+nconf.<span class="apidocCodeKeywordSpan">set</span>('database:host', '127.0.0.1');
+nconf.set('database:port', 5984);
 
 //
 // Get the entire database object from nconf. This will output
-// { host: &#x27;127.0.0.1&#x27;, port: 5984 }
+// { host: '127.0.0.1', port: 5984 }
 //
-console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
+console.log('foo: ' + nconf.get('foo'));
 ...</pre></li>
     </ul>
 
@@ -6949,7 +6942,7 @@ console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
   }
 
   var store = this.stores[name],
-      update = store &#x26;&#x26; !sameOptions(store);
+      update = store &amp;&amp; !sameOptions(store);
 
   if (!store || update) {
     if (update) {
@@ -6964,9 +6957,9 @@ console.log(&#x27;foo: &#x27; + nconf.get(&#x27;foo&#x27;));
     <li>example usage<pre class="apidocCodePre">...
 
 ``` js
-nconf.add(&#x27;supplied&#x27;, { type: &#x27;literal&#x27;, store: { &#x27;some&#x27;: &#x27;config&#x27; });
-nconf.add(&#x27;user&#x27;, { type: &#x27;file&#x27;, file: &#x27;/path/to/userconf.json&#x27; });
-nconf.add(&#x27;global&#x27;, { type: &#x27;file&#x27;, file: &#x27;/path/to/globalconf.json&#x27; });
+nconf.add('supplied', { type: 'literal', store: { 'some': 'config' });
+nconf.add('user', { type: 'file', file: '/path/to/userconf.json' });
+nconf.add('global', { type: 'file', file: '/path/to/globalconf.json' });
 ```
 
 ### nconf.<span class="apidocCodeKeywordSpan">use</span>(name, options)
@@ -6976,7 +6969,7 @@ Similar to `nconf.add`, except that it can replace an existing store if new opti
 //
 // Load a file store onto nconf with the specified settings
 //
-nconf.use(&#x27;file&#x27;, { file: &#x27;/path/to/some/config-file.json&#x27; });
+nconf.use('file', { file: '/path/to/some/config-file.json' });
 ...</pre></li>
     </ul>
 
@@ -6995,7 +6988,7 @@ nconf.use(&#x27;file&#x27;, { file: &#x27;/path/to/some/config-file.json&#x27; }
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">key = function () {
-  return Array.prototype.slice.call(arguments).join(&#x27;:&#x27;);
+  return Array.prototype.slice.call(arguments).join(':');
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -7069,7 +7062,7 @@ nconf.use(&#x27;file&#x27;, { file: &#x27;/path/to/some/config-file.json&#x27; }
   options.format = options.format || formats.json;
 
   return common.merge(options.files.map(function (file) {
-    return options.format.parse(fs.readFileSync(file, &#x27;utf8&#x27;));
+    return options.format.parse(fs.readFileSync(file, 'utf8'));
   }));
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -7090,7 +7083,7 @@ nconf.use(&#x27;file&#x27;, { file: &#x27;/path/to/some/config-file.json&#x27; }
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">path = function (key, separator) {
-  separator = separator || &#x27;:&#x27;;
+  separator = separator || ':';
   return key == null ? [] : key.split(separator);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
@@ -7105,3 +7098,4 @@ nconf.use(&#x27;file&#x27;, { file: &#x27;/path/to/some/config-file.json&#x27; }
     ]
 </div>
 </div>
+</body></html>
